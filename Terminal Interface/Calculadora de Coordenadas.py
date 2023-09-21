@@ -1,6 +1,8 @@
 import numpy as np
 
-print("""¿Qué operación vas a realizar?
+print("""
+    ¿Qué operación vas a realizar?
+    
     1) Calculadora de coordenadas polares a cartesianas
     2) Calculadora de coordenadas cartesianas a polares
     """)
@@ -32,7 +34,8 @@ elif calculadora == 2:
 
     r, theta = CartisianToPolar(x, y)
 
-    print("Resultado: ", r, theta)
+    print("Resultado de r: ", r)
+    print("Resultado de theta: ", theta)
 
 else:
     print('Error, intente nuevamente')
