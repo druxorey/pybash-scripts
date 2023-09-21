@@ -11,6 +11,7 @@ dividendo = input("Ingrese el dividendo: ")
 divisor = input("Ingrese el divisor: ")
 
 # Ejemplo de pull 2
+# Ejemplo 2
 
 if dividendo == "Messi" and divisor == "Dios":
     print("Efectivamente, Messi es el mejor del mundo")
