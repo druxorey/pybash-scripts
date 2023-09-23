@@ -30,7 +30,7 @@ root.rowconfigure(0, weight=1)
 
 style = ttk.Style()
 style.theme_use('clam')
-style.configure('mainFrame.TFrame', background="#282a36")
+style.configure('mainframe.TFrame', background="#282a36")
 
 # Labels Style
 
@@ -48,61 +48,61 @@ style_button.map('button.TButton', background=[('active','#606580')], foreground
 
 # Grid Configure
 
-mainFrame = ttk.Frame(root, style="mainFrame.TFrame")
-mainFrame.grid(column=0, row=0, sticky=(W, N, E, S))
+mainframe = ttk.Frame(root, style="mainframe.TFrame")
+mainframe.grid(column=0, row=0, sticky=(W, N, E, S))
 
-mainFrame.columnconfigure(0, weight=1)
-mainFrame.columnconfigure(1, weight=1)
-mainFrame.columnconfigure(2, weight=1)
-mainFrame.columnconfigure(3, weight=1)
+mainframe.columnconfigure(0, weight=1)
+mainframe.columnconfigure(1, weight=1)
+mainframe.columnconfigure(2, weight=1)
+mainframe.columnconfigure(3, weight=1)
 
-mainFrame.rowconfigure(0, weight=1)
-mainFrame.rowconfigure(1, weight=1)
-mainFrame.rowconfigure(2, weight=1)
-mainFrame.rowconfigure(3, weight=1)
-mainFrame.rowconfigure(4, weight=1)
-mainFrame.rowconfigure(5, weight=1)
-mainFrame.rowconfigure(6, weight=1)
-mainFrame.rowconfigure(7, weight=1)
+mainframe.rowconfigure(0, weight=1)
+mainframe.rowconfigure(1, weight=1)
+mainframe.rowconfigure(2, weight=1)
+mainframe.rowconfigure(3, weight=1)
+mainframe.rowconfigure(4, weight=1)
+mainframe.rowconfigure(5, weight=1)
+mainframe.rowconfigure(6, weight=1)
+mainframe.rowconfigure(7, weight=1)
 
 entry_1 = StringVar()
-label_entry_1 = ttk.Label(mainFrame, textvariable=entry_1, style='label_1.TLabel')
+label_entry_1 = ttk.Label(mainframe, textvariable=entry_1, style='label_1.TLabel')
 label_entry_1.grid(column=0, row=0, columnspan=4, sticky=(W, N, E, S))
 
 entry_2 = StringVar()
-label_entry_2 = ttk.Label(mainFrame, textvariable=entry_2, style='label_2.TLabel')
+label_entry_2 = ttk.Label(mainframe, textvariable=entry_2, style='label_2.TLabel')
 label_entry_2.grid(column=0, row=1, columnspan=4, sticky=(W, N, E, S))
 
-button0 = ttk.Button(mainFrame, text="0", style='button.TButton', command=lambda: ValueInput('0'))
-button1 = ttk.Button(mainFrame, text="1", style='button.TButton', command=lambda: ValueInput('1'))
-button2 = ttk.Button(mainFrame, text="2", style='button.TButton', command=lambda: ValueInput('2'))
-button3 = ttk.Button(mainFrame, text="3", style='button.TButton', command=lambda: ValueInput('3'))
-button4 = ttk.Button(mainFrame, text="4", style='button.TButton', command=lambda: ValueInput('4'))
-button5 = ttk.Button(mainFrame, text="5", style='button.TButton', command=lambda: ValueInput('5'))
-button6 = ttk.Button(mainFrame, text="6", style='button.TButton', command=lambda: ValueInput('6'))
-button7 = ttk.Button(mainFrame, text="7", style='button.TButton', command=lambda: ValueInput('7'))
-button8 = ttk.Button(mainFrame, text="8", style='button.TButton', command=lambda: ValueInput('8'))
-button9 = ttk.Button(mainFrame, text="9", style='button.TButton', command=lambda: ValueInput('9'))
+button0 = ttk.Button(mainframe, text="0", style='button.TButton', command=lambda: ValueInput('0'))
+button1 = ttk.Button(mainframe, text="1", style='button.TButton', command=lambda: ValueInput('1'))
+button2 = ttk.Button(mainframe, text="2", style='button.TButton', command=lambda: ValueInput('2'))
+button3 = ttk.Button(mainframe, text="3", style='button.TButton', command=lambda: ValueInput('3'))
+button4 = ttk.Button(mainframe, text="4", style='button.TButton', command=lambda: ValueInput('4'))
+button5 = ttk.Button(mainframe, text="5", style='button.TButton', command=lambda: ValueInput('5'))
+button6 = ttk.Button(mainframe, text="6", style='button.TButton', command=lambda: ValueInput('6'))
+button7 = ttk.Button(mainframe, text="7", style='button.TButton', command=lambda: ValueInput('7'))
+button8 = ttk.Button(mainframe, text="8", style='button.TButton', command=lambda: ValueInput('8'))
+button9 = ttk.Button(mainframe, text="9", style='button.TButton', command=lambda: ValueInput('9'))
 
-button_delete = ttk.Button(mainFrame, text=chr(9003), style='button.TButton')
-button_delete_todo = ttk.Button(mainFrame, text="C", style='button.TButton')
-button_parenthesis_1 = ttk.Button(mainFrame, text="(", style='button.TButton', command=lambda: ValueInput('('))
-button_parenthesis_2 = ttk.Button(mainFrame, text=")", style='button.TButton', command=lambda: ValueInput(')'))
-button_point = ttk.Button(mainFrame, text=".", style='button.TButton', command=lambda: ValueInput('.'))
+button_delete = ttk.Button(mainframe, text=chr(9003), style='button.TButton')
+button_delete_all = ttk.Button(mainframe, text="C", style='button.TButton')
+button_parenthesis_1 = ttk.Button(mainframe, text="(", style='button.TButton', command=lambda: ValueInput('('))
+button_parenthesis_2 = ttk.Button(mainframe, text=")", style='button.TButton', command=lambda: ValueInput(')'))
+button_point = ttk.Button(mainframe, text=".", style='button.TButton', command=lambda: ValueInput('.'))
 
-button_divide = ttk.Button(mainFrame, text=chr(247), style='button.TButton', command=lambda: ValueInput('/'))
-button_multiplication = ttk.Button(mainFrame, text="x", style='button.TButton', command=lambda: ValueInput('*'))
-button_subtraction = ttk.Button(mainFrame, text="-", style='button.TButton', command=lambda: ValueInput('-'))
-button_addition = ttk.Button(mainFrame, text="+", style='button.TButton', command=lambda: ValueInput('+'))
+button_divide = ttk.Button(mainframe, text=chr(247), style='button.TButton', command=lambda: ValueInput('/'))
+button_multiplication = ttk.Button(mainframe, text="x", style='button.TButton', command=lambda: ValueInput('*'))
+button_subtraction = ttk.Button(mainframe, text="-", style='button.TButton', command=lambda: ValueInput('-'))
+button_addition = ttk.Button(mainframe, text="+", style='button.TButton', command=lambda: ValueInput('+'))
 
-button_equal = ttk.Button(mainFrame, text="=",  style='button.TButton')
-button_square_root = ttk.Button(mainFrame, text="√", style='button.TButton')
+button_equal = ttk.Button(mainframe, text="=",  style='button.TButton')
+button_square_root = ttk.Button(mainframe, text="√", style='button.TButton')
 
 # Buttons on Screen
 
 button_parenthesis_1.grid(column=0, row=2, sticky=(W, N, E, S))
 button_parenthesis_2.grid(column=1, row=2, sticky=(W, N, E, S))
-button_delete_todo.grid(column=2, row=2, sticky=(W, N, E, S))
+button_delete_all.grid(column=2, row=2, sticky=(W, N, E, S))
 button_delete.grid(column=3, row=2, sticky=(W, N, E, S))
 
 button7.grid(column=0, row=3, sticky=(W, N, E, S))
@@ -127,7 +127,7 @@ button_subtraction.grid(column=3, row=6, sticky=(W, N, E, S))
 button_equal.grid(column=0, row=7, columnspan=3, sticky=(W, N, E, S))
 button_square_root.grid(column=3, row=7, sticky=(W, N, E, S))
 
-for child in mainFrame.winfo_children():
+for child in mainframe.winfo_children():
     child.grid_configure(ipady=10, padx=1, pady=1)
 
 root.mainloop()
