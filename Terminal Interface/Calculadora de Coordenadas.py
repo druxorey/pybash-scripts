@@ -10,7 +10,7 @@ print("""
 calculadora = int(input("Elige una opción: "))   
 
 if calculadora == 1: 
-    def PolarToCartisian(r, theta):
+    def PolarToCartesian(r, theta):
         theta = np.radians(theta)
         x = r * np.cos(theta)
         y = r * np.sin(theta)
@@ -19,12 +19,12 @@ if calculadora == 1:
     r = float(input("Ingrese el valor de r: "))
     theta = float(input("Ingrese el valor de theta: "))
 
-    x, y = PolarToCartisian(r, theta)
+    x, y = PolarToCartesian(r, theta)
 
     print("Resultado: ", x, y)
 
 elif calculadora == 2: 
-    def CartisianToPolar(x, y):
+    def CartesianToPolar(x, y):
         r = np.hypot(x, y)
         theta = np.degrees(np.arctan2(y, x))
         return (r, theta)
@@ -32,7 +32,7 @@ elif calculadora == 2:
     x = float(input("Ingrese el valor de x: "))
     y = float(input("Ingrese el valor de y: "))
 
-    r, theta = CartisianToPolar(x, y)
+    r, theta = CartesianToPolar(x, y)
 
     print("Resultado de r: ", r)
     print("Resultado de theta: ", theta)
