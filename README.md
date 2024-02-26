@@ -4,10 +4,6 @@ Welcome to the 'pybash-scripts' repository. This is a dedicated space where we h
 
 ## Repository Structure
 
-- `bash/`: Contains Bash scripts.
-- `python/`: Contains Python scripts.
-
-
 - `bash/`: Contains Bash scripts. 
 - `python/`: Contains Python scripts. 
   - `graphic/`: Contains applications with a graphical interface. 
