@@ -1,6 +1,7 @@
 import readchar
 import os
 import random
+from visuals import *
 from colorama import Fore, Style
 
 # Constants for position indexes
@@ -8,7 +9,6 @@ POS_X = 0
 POS_Y = 1
 
 # Color variables
-
 COLOR_CHARACTER = (Fore.YELLOW)
 COLOR_APPLE = (Fore.RED)
 COLOR_POTION = (Fore.GREEN)
@@ -44,44 +44,26 @@ map_potions = potion_main_list
 # Initial game values
 level = 0
 score = 0
-
-
-# Map
-obstacle_definition = """\
-# ########## ########## #
-#                       #
-# ## ## #### #### ## ## #
-# #   #           #   # #
-# #   # #### #### #   # #
-# #   # #       # #   # #
-# #   # # ## ## # #   # #
-# #   # # #   # # #   # #
-# #   # # #   # # #   # #
-# #   # # #   # # #   # #
-# ## ## # #   # # ## ## #
-                         
-# #####   #   #   ##### #
-                         
-# ## ## # #   # # ## ## #
-# #   # # #   # # #   # #
-# #   # # #   # # #   # #
-# #   # # #   # # #   # #
-# #   # # #   # # #   # #
-# #   # # ## ## # #   # #
-# #   # #       # #   # #
-# #   # # ## ## # #   # #
-# #   #           #   # #
-# ## ## #### #### ## ## #
-#                       #
-# ########## ########## #\
-"""
-
+ 
 # Create obstacle map
+aleatory_map = random.randint(1,2)
+
+if aleatory_map == 1:
+    obstacle_definition = first_map
+
+elif aleatory_map == 2:
+    obstacle_definition = second_map
+
 obstacle_definition = [list(row) for row in obstacle_definition.split("\n")]
 
 # Constants for map dimensions
 MAP_WIDTH = len(obstacle_definition[0])
 MAP_HEIGHT = len(obstacle_definition)
+
+# Game start tutorial
+os.system("clear")
+print(tutorial_screen)
+input("")
 
 # Main game loop
 while True:
@@ -109,8 +91,6 @@ while True:
                     if obstacle_definition[new_potion_position[POS_Y]][new_potion_position[POS_X]] != "#":
                         potion_main_list.append(new_potion_position)
                         break
-    
-
 
     print(f"{COLOR_RESET}███" + "███" * MAP_WIDTH  + "███")
     for coordinate_y in range(MAP_HEIGHT):
@@ -222,9 +202,9 @@ while True:
     for tail_piece in tail[1:]:  
         if tail_piece[POS_X] == character_position[POS_X] and tail_piece[POS_Y] == character_position[POS_Y]:
             os.system("clear")
-            print("¡Has perdido!")
+            print("GAME OVER")
+            print(f"Tu puntuación final: {score}")
             print(f"Has llegado al nivel: {level}")
-            print(f"Tu puntaje fue de: {score}")
             exit()
 
     # Update the tail position
