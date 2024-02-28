@@ -541,7 +541,7 @@ while not end_game:
                     elif menu_selector == "s":
                         menu_pos += 1
                         menu_pos %= menu_height
-                    elif menu_selector == "\r":
+                    elif menu_selector == "g":
                         step = 2
                     elif menu_selector == "q":
                         break
