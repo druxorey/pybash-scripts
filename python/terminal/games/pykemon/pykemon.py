@@ -11,6 +11,7 @@ POS_Y = 1
 # Constants for the game visual
 RESET = f"{Style.RESET_ALL}"
 LIMIT = f"{RESET}███"
+HEART = Fore.RED
 WALL = f"{Fore.RED}███"
 
 # Initial values
@@ -18,22 +19,33 @@ character_position = [8,10]
 debug_mode = False
 
 # Initial battle values
-TRAINER = []
-trainer_list = TRAINER
-pokemon_list = ["pikachu", "squirtle", "charmander", "bulbasaur"]
-initial_data = [pokemon_list[0]]
+trainer_list = []
+pokemon_list = ["Pikachu", "Squirtle", "Charmander", "Bulbasaur"]
+pokemon_life = [60, 70, 80, 90]
+
+pikachu_attack = ["Placaje", "Chispa", "Trueno"]
+pikachu_data = [pokemon_list[0], pokemon_life[0]]
+
+squirtle_attack = ["Placaje", "Pistola Agua"]
+squirtle_data = [pokemon_list[1], pokemon_life[1]]
+
+charmander_attack = ["Placaje", "Ascuas"]
+charmander_data = [pokemon_list[2], pokemon_life[2]]
+
+bulbasaur_attack = ["Placaje", "Latigo Cepa"]
+bulbasaur_data = [pokemon_list[3], pokemon_life[3]]
 
 # Import map layout from the variable in the 'visuals.py' file
 map_definition = MAP_LAYOUT
 
 # Create obstacle map and initialize trainers
 map_definition = [list(row) for row in map_definition.split("\n")]
-trainer_id = 1
+trainer_id = 3
 for coordinate_y in range(len(map_definition)):
     for coordinate_x in range(len(map_definition[0])):
         if map_definition[coordinate_y][coordinate_x] == "@":
             trainer_list.append([coordinate_x, coordinate_y, trainer_id])
-            trainer_id += 1
+            trainer_id -= 1
             map_definition[coordinate_y][coordinate_x] = " "
 
 # Constants for map dimensions
@@ -76,7 +88,7 @@ while True:
     # Debug mode
     if debug_mode == True:
         print("character_position: ",character_position)
-        print("trainer_combat: ",trainer_combat)
+        print("trainer_combat: ",trainer_list)
         print("MAP_WIDTH",MAP_WIDTH)
 
     # Check if you are on a trainer to ask if you want to fight him
@@ -107,16 +119,60 @@ while True:
         if trainer_combat is not None:
 
             if trainer_combat == 3:
-                pokimon = "CHARIZXDWADWA"
+                trainer_pokemon = [bulbasaur_data[0], bulbasaur_data[1]]
             elif trainer_combat == 2:
-                input("Si funciona")
+                trainer_pokemon = [charmander_data[0], charmander_data[1]]
             elif trainer_combat == 1:
-                input("Si funciona")
+                trainer_pokemon = [squirtle_data[0], squirtle_data[1]] 
 
-            os.system("clear")
+            player_life = pikachu_data[1]
+            trainer_life = trainer_pokemon[1]
+            message = f"Entrenador saca a {trainer_pokemon[0]}"
 
-            input(f"Empieza el combate de {pokimon}")
-            
+            end_combat = None
+            while end_combat != True:
+                os.system("clear")
+
+                life_center = int((MAP_WIDTH*3)/2)
+
+                display_player_life = f"{pikachu_data[0]} Ps.{player_life}/{pikachu_data[1]}"
+                display_trainer_life = f"{trainer_pokemon[0]} Ps.{trainer_life}/{trainer_pokemon[1]}"
+
+                display_player_hearts = " " * (int(player_life / pikachu_data[1] * 10)) 
+                display_trainer_hearts = " " * (int(trainer_life / trainer_pokemon[1] * 10)) 
+
+                print("╔══" + ("═══" * MAP_WIDTH) + "══╗")
+                print("║  " + message.center(MAP_WIDTH * 3) + "  ║")
+                print("╚══" + ("═══" * MAP_WIDTH) + "══╝")
+
+                print("╔══" + ("═══" * MAP_WIDTH) + "══╗")
+                print("║  " + (display_player_life).ljust(life_center) + "║" + (display_trainer_life).rjust(life_center) + "  ║"  )
+                print("║  " + HEART + (display_player_hearts).ljust(life_center) + RESET + "║" + HEART + (display_trainer_hearts).rjust(life_center) + RESET + "  ║")
+                print("╚══" + ("═══" * MAP_WIDTH) + "══╝")
+
+                print("╔══" + ("═══" * MAP_WIDTH) + "══╗")
+                print("║  " + (f"(1){pikachu_attack[0]} (2){pikachu_attack[1]}").center(MAP_WIDTH * 3) + "  ║")
+                print("╚══" + ("═══" * MAP_WIDTH) + "══╝")
+
+                attack_option = None
+                while attack_option not in ["1", "2"]:
+                    attack_option = input(f"\n¿Qué opción desea tomar?: ")
+                attack_option = int(attack_option)
+                if attack_option == 1:
+                    trainer_life -= 10
+                    message = f"{pikachu_data[0]} ha usado {pikachu_attack[0]}"
+                elif attack_option == 2:
+                    trainer_life -= 20
+                    message = f"{pikachu_data[0]} ha usado {pikachu_attack[1]}"
+
+                if trainer_life <= 0:
+                    os.system("clear")
+                    print(WIN_SCREEN)
+                    input("")
+                    pikachu_data[1] += 10
+                    trainer_list = [trainer for trainer in trainer_list if trainer[2] != trainer_combat]
+                    end_combat = True
+                    
     # Check if the next position is a wall
     if map_definition[next_position[POS_Y]][next_position[POS_X]] != "#":
         character_position = next_position
