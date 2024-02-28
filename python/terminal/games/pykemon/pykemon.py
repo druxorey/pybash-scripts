@@ -1,131 +1,122 @@
+from colorama import Fore, Style
+from visuals import *
 import readchar
 import os
 import random
-from colorama import Fore, Style
 
 # Constants for position indexes
 POS_X = 0
 POS_Y = 1
 
-# Color variables
-COLOR_CHARACTER = (Fore.YELLOW)
-COLOR_RIVAL = (Fore.WHITE)
-COLOR_RESET = (Style.RESET_ALL)
-IN_WALL = f"{Fore.RED}███"
-EX_WALL = f"{Style.RESET_ALL}███"
+# Constants for the game visual
+RESET = f"{Style.RESET_ALL}"
+LIMIT = f"{RESET}███"
+WALL = f"{Fore.RED}███"
 
-# Debug mode initial value
+# Initial values
+character_position = [8,10]
 debug_mode = False
 
-# Initial character values
-character_position = [7,13]
+# Initial battle values
+TRAINER = []
+trainer_list = TRAINER
+pokemon_list = ["pikachu", "squirtle", "charmander", "bulbasaur"]
+initial_data = [pokemon_list[0]]
 
-# Initial objects values
-RIVALS = 4
-object_main_list = []
-map_objects = object_main_list
+# Import map layout from the variable in the 'visuals.py' file
+map_definition = MAP_LAYOUT
 
-# Initial game values
-level = 0
-score = 0
-
-# Map
-obstacle_definition = """\
-###############
-#     ####   ##
-# ##  #### @ ##
-#@##         ##
-####         ##
-####  #########
-#     #########
-#     ##      #
-#  #####      #
-#  #########  #
-#             #
-#      @      #
-######   ######
-######   ######
-######   ######
-###############\
-"""
-
-# Create obstacle map and initialize rivals
-obstacle_definition = [list(row) for row in obstacle_definition.split("\n")]
-RIVAL_ID = 1
-for y in range(len(obstacle_definition)):
-    for x in range(len(obstacle_definition[0])):
-        if obstacle_definition[y][x] == "@":
-            object_main_list.append([x, y, RIVAL_ID])
-            RIVAL_ID += 1
-            obstacle_definition[y][x] = " "
+# Create obstacle map and initialize trainers
+map_definition = [list(row) for row in map_definition.split("\n")]
+trainer_id = 1
+for coordinate_y in range(len(map_definition)):
+    for coordinate_x in range(len(map_definition[0])):
+        if map_definition[coordinate_y][coordinate_x] == "@":
+            trainer_list.append([coordinate_x, coordinate_y, trainer_id])
+            trainer_id += 1
+            map_definition[coordinate_y][coordinate_x] = " "
 
 # Constants for map dimensions
-MAP_WIDTH = len(obstacle_definition[0])
-MAP_HEIGHT = len(obstacle_definition)
+MAP_WIDTH = len(map_definition[0])
+MAP_HEIGHT = len(map_definition)
+
+# Show the screen with the tutorial
+# os.system("clear")
+# input(INTRODUCTION)
 
 # Main game loop
 while True:
-
     os.system("clear")
-    
-    print((EX_WALL * MAP_WIDTH) + (EX_WALL * 2))
+    trainer_combat = None
+
+    print((LIMIT * MAP_WIDTH) + (LIMIT * 2))
     for coordinate_y in range(MAP_HEIGHT):
-        print(EX_WALL, end="")
+        print(LIMIT, end="")
         for coordinate_x in range(MAP_WIDTH):
 
             char_to_draw = "   "
-            object_in_cell = None
-            show_rival = None
+            char_in_cell = None
+            
+            if map_definition[coordinate_y][coordinate_x] == "#":
+                char_to_draw = WALL
 
-            if obstacle_definition[coordinate_y][coordinate_x] == "#":
-                char_to_draw = IN_WALL
-            for object_in_cell in map_objects:
-                if object_in_cell[POS_X] == coordinate_x and object_in_cell[POS_Y] == coordinate_y:
-                    char_to_draw = f"{COLOR_RIVAL} 󰐝 "
-            if character_position[POS_X] == coordinate_x and character_position[POS_Y] == coordinate_y:
-                char_to_draw = f"{COLOR_CHARACTER}  "
-                for object_in_cell in map_objects:
-                    if object_in_cell[POS_X] == character_position[POS_X] and object_in_cell[POS_Y] == character_position[POS_Y]:
-                        show_rival = object_in_cell[2]
+            for char_in_cell in trainer_list:
+                if char_in_cell[POS_X] == coordinate_x and char_in_cell[POS_Y] == coordinate_y:
+                    char_to_draw = f"{RESET} 󰐝 "
+                if character_position[POS_X] == coordinate_x and character_position[POS_Y] == coordinate_y:
+                    char_to_draw = f"{RESET}  "
+                    if char_in_cell[POS_X] == character_position[POS_X] and char_in_cell[POS_Y] == character_position[POS_Y]:
+                        trainer_combat = char_in_cell[2]
                         break
 
             print(f"{char_to_draw}", end="")
-        print(EX_WALL)
-    print((EX_WALL * MAP_WIDTH) + (EX_WALL * 2))
-    
-    if show_rival is not None:
-        if show_rival == 3:
-            defeated = input(f"¿Deseas eliminar al rival {show_rival}? (S/N): ")
-        if defeated.lower() == "s":
-            map_objects = [object_in_cell for object_in_cell in map_objects if object_in_cell[2] != show_rival]
+        print(LIMIT)
+    print((LIMIT * MAP_WIDTH) + (LIMIT * 2) + f"\n")
 
     # Debug mode
     if debug_mode == True:
-        print("Ubicación de los objetos del mapa: ",map_objects)
-        print("Objetos del mapa: ",len(map_objects))
-        print("Posición del personaje: ",character_position)
+        print("character_position: ",character_position)
+        print("trainer_combat: ",trainer_combat)
+        print("MAP_WIDTH",MAP_WIDTH)
 
-    # Read the next direction from the user
-    direction = readchar.readchar()
+    # Check if you are on a trainer to ask if you want to fight him
+    if trainer_combat is not None:
+        
+        print("╔══" + ("═══" * MAP_WIDTH) + "══╗")
+        print("║  " + (f"¿Empezar combate contra entrenador Nvl {trainer_combat}? [ENTER]").center(MAP_WIDTH * 3) + "  ║")
+        print("╚══" + ("═══" * MAP_WIDTH) + "══╝")
 
     # Calculate the next position based on the input direction
+    # Note: Uppercase letters are how the unix keyboard defines the keys, I discovered it by mistake and I'll leave it like that
+    direction = readchar.readchar()
     next_position = character_position.copy()
-    if direction in ["w", "W"]:
+    if direction in ["w", "A"]:
         next_position[POS_Y] -= 1
-    elif direction in ["s", "S"]:
+    elif direction in ["s", "B"]:
         next_position[POS_Y] += 1
-    elif direction in ["a", "A"]:
+    elif direction in ["a", "D"]:
         next_position[POS_X] -= 1
-    elif direction in ["d", "D"]:
+    elif direction in ["d", "C"]:
         next_position[POS_X] += 1
     elif direction in ["q", "Q"]:
         exit()
     elif direction == "b":
         debug_mode = not debug_mode
         continue
+    elif direction == "\n":    
+        if trainer_combat is not None:
 
+            if trainer_combat == 3:
+                pokimon = "CHARIZXDWADWA"
+            elif trainer_combat == 2:
+                input("Si funciona")
+            elif trainer_combat == 1:
+                input("Si funciona")
+
+            os.system("clear")
+
+            input(f"Empieza el combate de {pokimon}")
+            
     # Check if the next position is a wall
-    if obstacle_definition[next_position[POS_Y]][next_position[POS_X]] != "#":
+    if map_definition[next_position[POS_Y]][next_position[POS_X]] != "#":
         character_position = next_position
-    else:
-        continue
