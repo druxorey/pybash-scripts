@@ -58,9 +58,9 @@ def get_all_pokemons():
     print("Lista de pokemons cargada exitosamente.")
     return all_pokemons
 
+
 def main():
     pass
 
 if __name__ == "__main__":
     main()
-    
