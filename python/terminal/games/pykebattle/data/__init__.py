@@ -1,0 +1,1 @@
+from .pokeload import get_all_pokemons

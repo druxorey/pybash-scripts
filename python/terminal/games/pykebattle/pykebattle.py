@@ -1,13 +1,18 @@
-from pokeload import get_all_pokemons
+from scripts import *
+from data import *
 import random
+import time
 
-from pprint import pprint
+
+POKEMON_LIST = get_all_pokemons()
 
 
-def get_player_profile(pokemon_list):
+def get_player_profile(POKEMON_LIST):
+    os.system("clear")
+    print_inside_box("Bienvenido, introduce tu nombre")
     return {
-        "player_name": input("¿Cuál es tu nombre?: "),
-        "pokemon_inventory": [random.choice(pokemon_list) for a in range(3)],
+        "player_name": input(" > "),
+        "pokemon_inventory": [random.choice(POKEMON_LIST) for a in range(3)],
         "combats": 0,
         "pokeballs": 0,
         "health_potion": 0,
@@ -20,22 +25,24 @@ def any_player_pokemon_lives(player_profile):
 
 def choose_pokemon(player_profile):
     chosen = None
+    error = None
     while not chosen:
-        print("Elije con que pokemon lucharás")
+        os.system("clear")
+        print_inside_box("Elije con que pokemon lucharás")
+        # Manejar errroes
+        if error == "Error":
+            print("\n" + (colorize("ERROR: INGRESA LOS DATOS CORRECTAMENTE", "R", True)) + "\n")
+        else:    
+            print("")
+        # Imprimir lista de pokemon actuales
         for index in range(len(player_profile["pokemon_inventory"])):
             print("{} - {}".format(index, get_pokemon_info(player_profile["pokemon_inventory"][index])))
         try:
-            return player_profile["pokemon_inventory"][int(input("¿Cuál eliges?: "))]
+            return player_profile["pokemon_inventory"][int(input("\n¿Cuál eliges?: "))]
         except (ValueError, IndexError):
-            print("Elección inválida")
-
-
-def get_pokemon_info(pokemon):
-    return "{} | lvl {} | HP {}/{}".format(pokemon["name"], pokemon["level"], pokemon["current_health"], pokemon["base_health"])
-
+            error = "Error"
 
 #! SECONDARY FIGHT FUNCTIONS
-
 
 def player_attack(player_pokemon, enemy_pokemon):
     pass
@@ -64,16 +71,15 @@ def cure_pokemon(player_profile, player_pokemon):
 def capture_with_pokeball(player_profile, enemy_pokemon):
     pass
 
-
 #! PRINCIPAL FIGHT FUNCTION
 
-
 def fight(player_profile, enemy_pokemon):
-    print("--- NUEVO COMBATE ---")
 
     attack_history = []
     player_pokemon = choose_pokemon(player_profile)
-    print("Rivales: {} VS {}".format(get_pokemon_info(player_pokemon), get_pokemon_info(enemy_pokemon)))
+    os.system("clear")
+
+    print_pokemon_information(get_pokemon_info(player_pokemon), (get_pokemon_info(enemy_pokemon)))
     
     while any_player_pokemon_lives(player_profile) and enemy_pokemon["current_health"] > 0:
         action = None
@@ -83,14 +89,17 @@ def fight(player_profile, enemy_pokemon):
         if action == "A":
             player_attack(player_pokemon, enemy_pokemon)
             attack_history.append(player_pokemon)
-            enemy_attack(enemy_pokemon, player_pokemon)
         elif action == "V":
             cure_pokemon(player_profile, player_pokemon)
         elif action == "P":
             capture_with_pokeball(player_profile, enemy_pokemon)
+        elif action == "C":
+            player_pokemon = choose_pokemon(player_profile)
 
         if player_pokemon["current_health"] == 0 and any_player_pokemon_lives(player_profile):
             player_pokemon = choose_pokemon(player_profile)
+        
+        enemy_attack(enemy_pokemon, player_pokemon)
     
     if enemy_pokemon["current_health"] == 0:
         print("¡Has ganado!")
@@ -100,13 +109,27 @@ def fight(player_profile, enemy_pokemon):
     input("Presiona ENTER para  continuar...")
 
 
+def item_lottery(player_profile):
+    pass
+
+# Arregla el nivel de los pokemon 
+def min_lvl_fix():
+    for pokemon in POKEMON_LIST:
+        for attack in pokemon["attacks"]:
+            if attack["min_level"] == "":
+                attack["min_level"] = 1
+
+#! MAIN FUNCTION
+
 def main():
-    pokemon_list = get_all_pokemons()
-    player_profile = get_player_profile(pokemon_list)
+    player_profile = get_player_profile(POKEMON_LIST)
+    clear_and_header("", "", False)
     while any_player_pokemon_lives(player_profile):
-        enemy_pokemon = random.choice(pokemon_list)
+        enemy_pokemon = random.choice(POKEMON_LIST)
         fight(player_profile, enemy_pokemon)
+        item_lottery(player_profile)
     print("Has perdido el combate Nro.{}".format(player_profile["combats"]))
+
 
 if __name__ == "__main__":
     main()
