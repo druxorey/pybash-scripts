@@ -4,7 +4,7 @@ import os
 
 # Importing local libraries 
 from data import get_all_pokemons
-from scripts import SCREEN_WIDTH, colorize, print_inside_box, combat_timer, get_pokemon_info, print_pokemon_information, print_actions, player_attack, enemy_attack
+from scripts import SCREEN_WIDTH, INPUT_MESSAGE, colorize, print_inside_box, combat_timer, get_pokemon_info, print_pokemon_information, print_actions, player_attack, enemy_attack
 
 
 POKEMON_LIST = get_all_pokemons() # Fetch all pokemons
@@ -106,7 +106,7 @@ def choose_pokemon(player_profile):
         try:
             print("║" + (" " * SCREEN_WIDTH) + "║")
             print("╚" + ("═" * SCREEN_WIDTH) + "╝")
-            return player_profile["pokemon_inventory"][int(input("\nIngresa tu opción: "))]
+            return player_profile["pokemon_inventory"][int(input(INPUT_MESSAGE))]
         except (ValueError, IndexError):
             error = "Error"
 

@@ -4,6 +4,7 @@ from colorama import Fore, Style
 
 
 SCREEN_WIDTH = 80
+INPUT_MESSAGE = "\nIngresa tu opción: "
 
 
 def colorize(string, color, center=False):
@@ -49,7 +50,8 @@ def print_pokemon_information(player_pokemon, enemy_pokemon):
     print("╚" + ("═" * SCREEN_WIDTH) + "╝")
 
 
-def print_attacks(player_pokemon):
+def print_attacks(player_pokemon, enemy_pokemon):
+    print_pokemon_information(get_pokemon_info(player_pokemon), (get_pokemon_info(enemy_pokemon)))
     # Get the attacks of the player's Pokemon that are available at its current level
     attacks_to_print = [attack for attack in player_pokemon["attacks"] if int(attack["min_level"]) <= int(player_pokemon["level"])]
 
@@ -67,7 +69,7 @@ def print_attacks(player_pokemon):
             print("║" + (" " * SCREEN_WIDTH) + "║")
             print("╚" + ("═" * SCREEN_WIDTH) + "╝")
             # Return the chosen attack
-            return attacks_to_print[int(input("¿Cuál eliges?\n"))]
+            return attacks_to_print[int(input(INPUT_MESSAGE))]
         except (ValueError, IndexError):
             print("¡¡¡Opcion invalida!!!")
 
@@ -76,5 +78,5 @@ def print_actions():
     action = None
     while action not in ["A", "P", "V", "C"]:
         print_inside_box("[A]tacar, [P]okeball, Poción de [V]ida, [C]ambiar")
-        action = input("¿Qué deseas hacer?: ").upper()
+        action = input(INPUT_MESSAGE).upper()
     return action
