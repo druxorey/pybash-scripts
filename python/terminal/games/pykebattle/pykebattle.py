@@ -29,15 +29,20 @@ def choose_pokemon(player_profile):
     while not chosen:
         os.system("clear")
         print_inside_box("Elije con que pokemon lucharás")
+
         # Manejar errroes
         if error == "Error":
-            print("\n" + (colorize("ERROR: INGRESA EL NÚMERO CORRESPONDIENTE", "R", True)) + "\n")
+            print("╔" + ("═" * SCREEN_WIDTH) + "╗")
+            print("║" + (colorize("ERROR: INGRESA EL NÚMERO CORRESPONDIENTE", "R", True)) + "║")
         else:    
-            print("")
+            print("╔" + ("═" * SCREEN_WIDTH) + "╗")
+            print("║" + (" " * SCREEN_WIDTH) + "║")
         # Imprimir lista de pokemon actuales
         for index in range(len(player_profile["pokemon_inventory"])):
-            print("{} - {}".format(index, get_pokemon_info(player_profile["pokemon_inventory"][index])))
+            print("║" + ("{} - {}".format(index, get_pokemon_info(player_profile["pokemon_inventory"][index]))).center(SCREEN_WIDTH) + "║")
         try:
+            print("║" + (" " * SCREEN_WIDTH) + "║")
+            print("╚" + ("═" * SCREEN_WIDTH) + "╝")
             return player_profile["pokemon_inventory"][int(input("\nIngresa tu opción: "))]
         except (ValueError, IndexError):
             error = "Error"
@@ -71,7 +76,6 @@ def fight(player_profile, enemy_pokemon):
 
     attack_history = []
     player_pokemon = choose_pokemon(player_profile)
-    os.system("clear")
 
     print_pokemon_information(get_pokemon_info(player_pokemon), (get_pokemon_info(enemy_pokemon)))
     
@@ -116,6 +120,7 @@ def min_lvl_fix():
 def main():
     player_profile = get_player_profile(POKEMON_LIST)
     clear_and_header("", "", False)
+    min_lvl_fix()
     while any_player_pokemon_lives(player_profile):
         enemy_pokemon = random.choice(POKEMON_LIST)
         fight(player_profile, enemy_pokemon)

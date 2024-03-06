@@ -19,6 +19,9 @@ def multiplier_for_type(first_poke, second_poke):
         "acero": {"fuego": 0.5, "lucha": 0.5, "tierra": 0.5, "hada": 1.5, "roca": 1.5, "hielo": 1.5},
         "hada": {"veneno": 0.5, "hada": 0.5, "siniestro": 1.5, "dragon": 1.5, "lucha": 1.5}
     }
-    first_type = first_poke["type"][0]
-    second_type = second_poke["type"][0]
-    return type_effectiveness.get(first_type, {}).get(second_type, None)
+    total_effectiveness = 0
+    for first_type in first_poke["type"]:
+        for second_type in second_poke["type"]:
+            total_effectiveness += type_effectiveness.get(first_type, {}).get(second_type, 1)
+    average_effectiveness = total_effectiveness / (len(first_poke["type"]) * len(second_poke["type"]))
+    return average_effectiveness

@@ -10,6 +10,8 @@ PKBASE = {
     "level": 1,
     "type": None,
     "current_exp": 0,
+    "defense": 10,
+    "attack" : 10
 }
 
 URL_BASE = "https://www.pokexperto.net/index2.php?seccion=nds/nationaldex/movimientos_nivel&pk="
@@ -55,7 +57,7 @@ def get_all_pokemons():
     except FileNotFoundError:
         print("¡Archivo no encontrado!, descargando de internet...")
         all_pokemons = []
-        for index in range(1):
+        for index in range(9):
             all_pokemons.append(get_pokemon(index + 1))
             print("*", end="")
             sys.stdout.flush()
