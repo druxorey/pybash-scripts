@@ -1,4 +1,6 @@
+# Function to calculate the effectiveness of a Pokemon's attack on another Pokemon based on their types
 def multiplier_for_type(first_poke, second_poke):
+    # Dictionary to store the effectiveness of each type of attack on other types
     type_effectiveness = {
         "normal": {"lucha": 0.5},
         "lucha": {"volador": 0.5, "psiquico": 0.5, "normal": 1.5},
@@ -20,8 +22,10 @@ def multiplier_for_type(first_poke, second_poke):
         "hada": {"veneno": 0.5, "hada": 0.5, "siniestro": 1.5, "dragon": 1.5, "lucha": 1.5}
     }
     total_effectiveness = 0
+    # Calculate the average effectiveness by dividing the total effectiveness by the number of type combinations
     for first_type in first_poke["type"]:
         for second_type in second_poke["type"]:
             total_effectiveness += type_effectiveness.get(first_type, {}).get(second_type, 1)
     average_effectiveness = total_effectiveness / (len(first_poke["type"]) * len(second_poke["type"]))
+    # Return the average effectiveness
     return average_effectiveness
