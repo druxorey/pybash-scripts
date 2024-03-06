@@ -31,24 +31,18 @@ def choose_pokemon(player_profile):
         print_inside_box("Elije con que pokemon lucharás")
         # Manejar errroes
         if error == "Error":
-            print("\n" + (colorize("ERROR: INGRESA LOS DATOS CORRECTAMENTE", "R", True)) + "\n")
+            print("\n" + (colorize("ERROR: INGRESA EL NÚMERO CORRESPONDIENTE", "R", True)) + "\n")
         else:    
             print("")
         # Imprimir lista de pokemon actuales
         for index in range(len(player_profile["pokemon_inventory"])):
             print("{} - {}".format(index, get_pokemon_info(player_profile["pokemon_inventory"][index])))
         try:
-            return player_profile["pokemon_inventory"][int(input("\n¿Cuál eliges?: "))]
+            return player_profile["pokemon_inventory"][int(input("\nIngresa tu opción: "))]
         except (ValueError, IndexError):
             error = "Error"
 
 #! SECONDARY FIGHT FUNCTIONS
-
-def player_attack(player_pokemon, enemy_pokemon):
-    pass
-
-
-def enemy_attack(enemy_pokemon, player_pokemon):
     pass
 
 
@@ -82,9 +76,7 @@ def fight(player_profile, enemy_pokemon):
     print_pokemon_information(get_pokemon_info(player_pokemon), (get_pokemon_info(enemy_pokemon)))
     
     while any_player_pokemon_lives(player_profile) and enemy_pokemon["current_health"] > 0:
-        action = None
-        while action not in ["A", "P", "V", "C"]:
-            action = input("¿Qué deseas hacer?: [A]tacar, [P]okeball, Poción de [V]ida, [C]ambiar\n")
+        action = print_actions()
 
         if action == "A":
             player_attack(player_pokemon, enemy_pokemon)

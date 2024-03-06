@@ -14,10 +14,10 @@ PKBASE = {
 
 URL_BASE = "https://www.pokexperto.net/index2.php?seccion=nds/nationaldex/movimientos_nivel&pk="
 
-# Obtén la ruta del directorio actual
+# Get the path of the current directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Une la ruta del directorio actual con el nombre del archivo
+# Join the current directory path with the file name
 pokefile_path = os.path.join(current_dir, "pokefile.pkl")
 
 
@@ -46,24 +46,6 @@ def get_pokemon(index):
         new_pokemon["attacks"].append(attack)
     return new_pokemon
 
-
-# def get_all_pokemons():
-#     try:
-#         print("Cargando el archivo de pokemons...")
-#         with open("pokefile.pkl", "rb") as pokefile:
-#             all_pokemons = pickle.load(pokefile)
-#     except FileNotFoundError:
-#         print("¡Archivo no encontrado!, descargando de internet...")
-#         all_pokemons = []
-#         for index in range(1):
-#             all_pokemons.append(get_pokemon(index + 1))
-#             print("*", end="")
-#             sys.stdout.flush()
-#         with open("pokefile.pkl", "wb") as pokefile:
-#             pickle.dump(all_pokemons, pokefile)
-#             print("\n¡Todos los pokemons se han descargado!")
-#     print("Lista de pokemons cargada exitosamente.")
-#     return all_pokemons
 
 def get_all_pokemons():
     try:
