@@ -1,8 +1,10 @@
-from data import multiplier_for_type
-from .visuals import clear_and_header, get_move_info, colorize, print_pokemon_information, get_pokemon_info, print_inside_box, print_attacks
+# Importing standard libraries
 import time
 import random
-import os
+
+# Importing local libraries 
+from data import multiplier_for_type
+from .visuals import colorize, print_pokemon_information, get_pokemon_info, print_attacks
 
 
 def player_attack(player_pokemon, enemy_pokemon):
