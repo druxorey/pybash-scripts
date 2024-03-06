@@ -1,33 +1,17 @@
 from data import multiplier_for_type
-from .visuals import clear_and_header, get_move_info, colorize
+from .visuals import clear_and_header, get_move_info, colorize, print_pokemon_information, get_pokemon_info, print_inside_box, print_attacks
 import time
 import random
-
-
-def print_attacks(player_pokemon):
-    attacks_to_print = [attack for attack in player_pokemon["attacks"] if
-                        int(attack["min_level"]) <= int(player_pokemon["level"])]
-    print("***** MOVIMIENTOS *****\n")
-
-    chosen = None
-    while not chosen:
-        for index in range(len(attacks_to_print)):
-            print("{} - {} ".format(index, get_move_info(attacks_to_print[index])))
-        try:
-            return attacks_to_print[int(input("¿Cuál eliges?\n"))]
-        except (ValueError, IndexError):
-            clear_and_header("", "", False)
-            print("¡¡¡Opcion invalida!!!")
+import os
 
 
 def player_attack(player_pokemon, enemy_pokemon):
-    clear_and_header(player_pokemon, enemy_pokemon, True)
+    print_pokemon_information(get_pokemon_info(player_pokemon), (get_pokemon_info(enemy_pokemon)))
     multiplier = multiplier_for_type(player_pokemon, enemy_pokemon)
-
     attack = print_attacks(player_pokemon)
-    clear_and_header(player_pokemon, enemy_pokemon, True)
+    print_pokemon_information(get_pokemon_info(player_pokemon), (get_pokemon_info(enemy_pokemon)))
 
-    print("{} ataca con: {}\n".format(colorize(player_pokemon["name"], "R"), attack["name"]))
+    print("{} ataca con: {}\n".format(colorize(player_pokemon["name"], "G"), attack["name"]))
     time.sleep(2)
 
     if multiplier > 1:
@@ -45,13 +29,13 @@ def player_attack(player_pokemon, enemy_pokemon):
 
     if int(enemy_pokemon["current_health"]) <= 0:
         enemy_pokemon["current_health"] = 0
-        print("{} está fuera de combate.".format(colorize(enemy_pokemon["name"])))
+        print("{} está fuera de combate.".format(colorize(enemy_pokemon["name"], "R")))
 
 
 def enemy_attack(enemy_pokemon, player_pokemon):
     if int(enemy_pokemon["current_health"]) > 0:
 
-        clear_and_header(player_pokemon, enemy_pokemon, True)
+        print_pokemon_information(get_pokemon_info(player_pokemon), (get_pokemon_info(enemy_pokemon)))
         multiplier = multiplier_for_type(enemy_pokemon, player_pokemon)
 
         attacks = [attack for attack in enemy_pokemon["attacks"] if
@@ -59,7 +43,7 @@ def enemy_attack(enemy_pokemon, player_pokemon):
 
         attack = random.choice(attacks)
 
-        print("{} ataca con: {}\n".format(colorize(enemy_pokemon["name"]), attack["name"]))
+        print("{} ataca con: {}\n".format(colorize(enemy_pokemon["name"], "R"), attack["name"]))
         time.sleep(2)
 
         if multiplier > 1:
@@ -79,4 +63,4 @@ def enemy_attack(enemy_pokemon, player_pokemon):
             player_pokemon["current_health"] = 0
             print("{} está fuera de combate.".format(colorize(player_pokemon["name"], "G")))
 
-        clear_and_header(player_pokemon, enemy_pokemon, True)
+        print_pokemon_information(get_pokemon_info(player_pokemon), (get_pokemon_info(enemy_pokemon)))
