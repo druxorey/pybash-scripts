@@ -26,8 +26,7 @@ def print_inside_box(string):
 
 def combat_timer():
     os.system("clear")
-    # Print the countdown for the new battle
-    for i in range(3, 0, -1):
+    for i in range(3, 0, -1): # Print the countdown for the new battle
         os.system("clear")
         print("╔" + ("═" * SCREEN_WIDTH) + "╗")
         print("║" + (f"NUEVO COMBATE EN {i}").center(SCREEN_WIDTH) + "║")
@@ -36,7 +35,7 @@ def combat_timer():
 
 
 def get_pokemon_info(pokemon):
-    return "{:<10} │ lvl {:<2} │ HP {}/{}".format(pokemon["name"], pokemon["level"], pokemon["current_health"], pokemon["base_health"])
+    return "{:<10} │ lvl {:<2} │ HP {:<3}/{:<3}".format(pokemon["name"], pokemon["level"], pokemon["current_health"], pokemon["base_health"])
 
 
 def get_move_info(attack):
@@ -62,14 +61,14 @@ def print_attacks(player_pokemon, enemy_pokemon):
     # Loop until a valid attack is chosen
     chosen = None
     while not chosen:
-        # Print the available attacks
-        for index in range(len(attacks_to_print)):
+        for index in range(len(attacks_to_print)): # Print the available attacks
             print("║" + ("{:<2} - {} ".format(index, get_move_info(attacks_to_print[index]))).center(SCREEN_WIDTH) + "║")
         try:
             print("║" + (" " * SCREEN_WIDTH) + "║")
             print("╚" + ("═" * SCREEN_WIDTH) + "╝")
-            # Return the chosen attack
-            return attacks_to_print[int(input(INPUT_MESSAGE))]
+
+            return attacks_to_print[int(input(INPUT_MESSAGE))] # Return the chosen attack
+        
         except (ValueError, IndexError):
             print("¡¡¡Opcion invalida!!!")
 

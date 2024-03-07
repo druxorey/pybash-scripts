@@ -9,6 +9,7 @@ from .visuals import SCREEN_WIDTH, colorize, print_pokemon_information, get_poke
 
 def attack_information(attacking_pokemon, defending_pokemon, multiplier, attack, is_player):
 
+    # Setting the color for the attacking and defending Pokemon based on who is the player
     if is_player:
         attacking_pokemon_color = "G"
         defending_pokemon_color = "R"
@@ -16,8 +17,11 @@ def attack_information(attacking_pokemon, defending_pokemon, multiplier, attack,
         attacking_pokemon_color = "R"
         defending_pokemon_color = "G"
 
+    # Printing the attack information
     print("╔" + ("═" * SCREEN_WIDTH) + "╗")
     print("║" + ("{} ataca con: {}".format(colorize(attacking_pokemon["name"], attacking_pokemon_color), attack["name"])).center(SCREEN_WIDTH + 9) + "║")
+
+    # Checking the effectiveness of the attack
     if multiplier > 1:
         effectivity = "El ataque fue super efectivo"
     elif multiplier <= 1:
@@ -26,10 +30,13 @@ def attack_information(attacking_pokemon, defending_pokemon, multiplier, attack,
     print("║" + effectivity.center(SCREEN_WIDTH) + "║")
     print("║" + " ".center(SCREEN_WIDTH) + "║")
 
+    # Calculating the damage and updating the health of the defending Pokemon
     damage = (int(attack["damage"]) + attacking_pokemon["attack"] - defending_pokemon["defense"]) * multiplier
     defending_pokemon["current_health"] = int(defending_pokemon["current_health"]) - int(damage)
 
     message = ("{} recibe {} puntos de daño (DP)".format(colorize(defending_pokemon["name"], defending_pokemon_color), int(damage)))
+
+    # Checking if the defending Pokemon is out of combat
     if int(defending_pokemon["current_health"]) <= 0:
         defending_pokemon["current_health"] = 0
         print("║" + ("{} está fuera de combate.".format(colorize(defending_pokemon["name"], defending_pokemon_color))).center(SCREEN_WIDTH + 9) + "║")
@@ -38,7 +45,6 @@ def attack_information(attacking_pokemon, defending_pokemon, multiplier, attack,
     print("╚" + ("═" * SCREEN_WIDTH) + "╝")
 
     time.sleep(3)
-
 
 
 def player_attack(player_pokemon, enemy_pokemon):
@@ -51,6 +57,8 @@ def player_attack(player_pokemon, enemy_pokemon):
     
 
 def enemy_attack(enemy_pokemon, player_pokemon):
+
+    # Checking if the enemy Pokemon can attack
     if int(enemy_pokemon["current_health"]) > 0:
 
         multiplier = multiplier_for_type(enemy_pokemon, player_pokemon)

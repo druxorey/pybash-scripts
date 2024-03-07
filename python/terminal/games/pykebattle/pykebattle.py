@@ -81,11 +81,10 @@ def fight(player_profile, enemy_pokemon):
         enemy_attack(enemy_pokemon, player_pokemon)
     
     if enemy_pokemon["current_health"] == 0:
-        print("¡Has ganado!")
+        print_inside_box("¡HAS GANADO! Presiona ENTER para continuar...")
         assign_experience(attack_history)
 
-    print("--- FIN DEL COMBATE ---")
-    input("Presiona ENTER para  continuar...")
+    input("")
 
 
 def choose_pokemon(player_profile):
