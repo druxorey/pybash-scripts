@@ -4,29 +4,36 @@ import random
 
 # Importing local libraries 
 from data import multiplier_for_type
-from .visuals import colorize, print_pokemon_information, get_pokemon_info, print_attacks
+from .visuals import SCREEN_WIDTH, colorize, print_pokemon_information, get_pokemon_info, print_attacks
 
 
 def attack_information(attacking_pokemon, defending_pokemon, multiplier, attack, is_player):
+
     if is_player:
         attacking_pokemon_color = "G"
         defending_pokemon_color = "R"
     else:
         attacking_pokemon_color = "R"
         defending_pokemon_color = "G"
-    print("{} ataca con: {}\n".format(colorize(attacking_pokemon["name"], attacking_pokemon_color), attack["name"]))
+
+    print("╔" + ("═" * SCREEN_WIDTH) + "╗")
+    print("║" + ("{} ataca con: {}".format(colorize(attacking_pokemon["name"], attacking_pokemon_color), attack["name"])).center(SCREEN_WIDTH + 9) + "║")
     if multiplier > 1:
-        print("El ataque fue super efectivo")
-        time.sleep(1)
+        effectivity = "El ataque fue super efectivo"
     elif multiplier < 1:
-        print("El ataque no ha sido muy efectivo")
-        time.sleep(1)
+        effectivity = "El ataque no ha sido muy efectivo"
+
+    print("║" + effectivity.center(SCREEN_WIDTH) + "║")
+    print("║" + " ".center(SCREEN_WIDTH) + "║")
 
     damage = (int(attack["damage"]) + attacking_pokemon["attack"] - defending_pokemon["defense"]) * multiplier
     defending_pokemon["current_health"] = int(defending_pokemon["current_health"]) - damage
 
-    print("{} recibe {} puntos de daño (DP)".format(colorize(defending_pokemon["name"], defending_pokemon_color), damage))
-    time.sleep(2)
+    message = ("{} recibe {} puntos de daño (DP)".format(colorize(defending_pokemon["name"], defending_pokemon_color), damage))
+    print("║" + (message).center(SCREEN_WIDTH + 9) + "║")
+    print("╚" + ("═" * SCREEN_WIDTH) + "╝")
+
+    time.sleep(4)
 
     if int(defending_pokemon["current_health"]) <= 0:
         defending_pokemon["current_health"] = 0
