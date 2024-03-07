@@ -1,5 +1,6 @@
 # Importing standard libraries
 import os
+import time
 from colorama import Fore, Style
 
 
@@ -31,7 +32,7 @@ def combat_timer():
         print("╔" + ("═" * SCREEN_WIDTH) + "╗")
         print("║" + (f"NUEVO COMBATE EN {i}").center(SCREEN_WIDTH) + "║")
         print("╚" + ("═" * SCREEN_WIDTH) + "╝")
-        #!!! time.sleep(1)
+        #time.sleep(1)
 
 
 def get_pokemon_info(pokemon):
@@ -73,9 +74,10 @@ def print_attacks(player_pokemon, enemy_pokemon):
             print("¡¡¡Opcion invalida!!!")
 
 
-def print_actions():
+def print_actions(player_pokemon, enemy_pokemon):
     action = None
     while action not in ["A", "P", "V", "C"]:
+        print_pokemon_information(player_pokemon, enemy_pokemon)
         print_inside_box("[A]tacar, [P]okeball, Poción de [V]ida, [C]ambiar")
         action = input(INPUT_MESSAGE).upper()
     return action

@@ -1,5 +1,6 @@
 # Importing standard libraries
 import random
+import time
 import os
 
 # Importing local libraries 
@@ -25,8 +26,8 @@ def get_player_profile(POKEMON_LIST):
         "player_name": input(" > "),
         "pokemon_inventory": [random.choice(POKEMON_LIST) for a in range(3)], # Assign three random pokemons to the player's inventory
         "combats": 0,
-        "pokeballs": 0,
-        "health_potion": 0,
+        "pokeballs": 10,
+        "health_potion": 3,
     }
 
 
@@ -37,8 +38,33 @@ def any_player_pokemon_lives(player_profile):
 #! --------- FUNCTIONS FOR OTHER ACTIONS DURING THE FIGHT --------- !#
 
 
-def cure_pokemon(player_profile, player_pokemon):
-    pass
+def cure_pokemon(player_profile, player_pokemon, enemy_pokemon):
+    print_pokemon_information(get_pokemon_info(player_pokemon), (get_pokemon_info(enemy_pokemon)))
+
+    # Verifica que existan pociones
+    if player_profile["health_potion"] > 0:
+        recovered_points = player_pokemon["base_health"] - player_pokemon["current_health"]
+        if recovered_points > 50:
+            recovered_points = 50
+
+        player_pokemon["current_health"] += 50
+
+        if player_pokemon["current_health"] > player_pokemon["base_health"]:
+            player_pokemon["current_health"] = player_pokemon["base_health"]
+
+        # Resta una pocion del inv
+        player_profile["health_potion"] -= 1
+
+        # Muestra cantidad pociones y los los pts recuperados
+        print("╔" + ("═" * SCREEN_WIDTH) + "╗")
+        print("║" + (("Tienes {} pociones".format(player_profile["health_potion"])).center(SCREEN_WIDTH)) + "║")
+        print("║" + "Utilizaste una poción".center(SCREEN_WIDTH) + "║")
+        print("║" + ("{} Pts recuperados.".format(recovered_points)).center(SCREEN_WIDTH) + "║")
+        print("╚" + ("═" * SCREEN_WIDTH) + "╝")
+    else:
+        print_inside_box("No tienes más pociones.")
+
+    time.sleep(3)
 
 
 def capture_with_pokeball(player_profile, enemy_pokemon):
@@ -46,7 +72,16 @@ def capture_with_pokeball(player_profile, enemy_pokemon):
 
 
 def item_lottery(player_profile):
-    pass
+    item = random.randint(1, 2)
+    os.system("clear")
+    if item == 1:
+        player_profile["pokeballs"] += 1
+        print_inside_box("Obtuviste una pokeball, tienes {}".format(player_profile["pokeballs"]))
+    else:
+        player_profile["health_potion"] += 1
+        print_inside_box("Obtuviste una poción, tienes {}".format(player_profile["health_potion"]))
+
+    time.sleep(3)
 
 
 #! --------- FUNCTIONS USED DURING FIGHTS --------- !#
@@ -55,28 +90,28 @@ def item_lottery(player_profile):
 def fight(player_profile, enemy_pokemon):
 
     attack_history = []
-    player_pokemon = choose_pokemon(player_profile)
+    player_pokemon = choose_pokemon(player_profile, enemy_pokemon)
     print_pokemon_information(get_pokemon_info(player_pokemon), (get_pokemon_info(enemy_pokemon)))
 
     # The fight continues as long as any player's Pokemon is alive and the enemy Pokemon's health is above 0
     while any_player_pokemon_lives(player_profile) and enemy_pokemon["current_health"] > 0:
         
         # The player chooses an action and depending on the action chosen, the player attacks, heals, captures, or changes their Pokemon
-        action = print_actions()
+        action = print_actions(get_pokemon_info(player_pokemon), (get_pokemon_info(enemy_pokemon)))
 
         if action == "A":
             player_attack(player_pokemon, enemy_pokemon)
             attack_history.append(player_pokemon)
         elif action == "V":
-            cure_pokemon(player_profile, player_pokemon)
+            cure_pokemon(player_profile, player_pokemon, enemy_pokemon)
         elif action == "P":
             capture_with_pokeball(player_profile, enemy_pokemon)
         elif action == "C":
-            player_pokemon = choose_pokemon(player_profile)
+            player_pokemon = choose_pokemon(player_profile, enemy_pokemon)
 
         # If the player's Pokemon's health reaches 0 and there are other Pokemons left, the player chooses another Pokemon
         if player_pokemon["current_health"] == 0 and any_player_pokemon_lives(player_profile):
-            player_pokemon = choose_pokemon(player_profile)
+            player_pokemon = choose_pokemon(player_profile, enemy_pokemon)
 
         enemy_attack(enemy_pokemon, player_pokemon)
     
@@ -87,18 +122,20 @@ def fight(player_profile, enemy_pokemon):
     input("")
 
 
-def choose_pokemon(player_profile):
+def choose_pokemon(player_profile, enemy_pokemon):
     chosen = None
     error = None
     while not chosen:
         os.system("clear")
-        print_inside_box("Elije con que pokemon lucharás")
+        print_inside_box("Vas a luchar contra {}".format(enemy_pokemon["name"]))
 
         if error == "Error":
             print("╔" + ("═" * SCREEN_WIDTH) + "╗")
             print("║" + (colorize("ERROR: INGRESA EL NÚMERO CORRESPONDIENTE", "R", True)) + "║")
         else:    
             print("╔" + ("═" * SCREEN_WIDTH) + "╗")
+            print("║" + (" " * SCREEN_WIDTH) + "║")
+            print("║" + "ELIGE TU POKÉMON".center(SCREEN_WIDTH) + "║")
             print("║" + (" " * SCREEN_WIDTH) + "║")
         for index in range(len(player_profile["pokemon_inventory"])):
             print("║" + ("{} - {}".format(index, get_pokemon_info(player_profile["pokemon_inventory"][index]))).center(SCREEN_WIDTH) + "║")
