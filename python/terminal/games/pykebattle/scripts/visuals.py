@@ -25,14 +25,23 @@ def print_inside_box(string):
     print("╚" + ("═" * SCREEN_WIDTH) + "╝")
 
 
-def combat_timer():
+def after_combat_status(experience_gained, item_obtained):
     os.system("clear")
+    print_inside_box("¡HAS GANADO! Presiona ENTER para continuar...")
+
+    print("╔" + ("═" * SCREEN_WIDTH) + "╗")
+    print("║" + (" " * SCREEN_WIDTH) + "║")
+    for experience in experience_gained:
+        print("║" + experience.center(SCREEN_WIDTH + 9) + "║")
+    print("║" + (" " * SCREEN_WIDTH) + "║")
+    print("╚" + ("═" * SCREEN_WIDTH) + "╝")
+    input()
+
     for i in range(3, 0, -1): # Print the countdown for the new battle
         os.system("clear")
-        print("╔" + ("═" * SCREEN_WIDTH) + "╗")
-        print("║" + (f"NUEVO COMBATE EN {i}").center(SCREEN_WIDTH) + "║")
-        print("╚" + ("═" * SCREEN_WIDTH) + "╝")
-        #time.sleep(1)
+        print_inside_box(f"NUEVO COMBATE EN {i}")
+        print_inside_box(item_obtained)
+        time.sleep(1)
 
 
 def get_pokemon_info(pokemon):
@@ -51,17 +60,17 @@ def print_pokemon_information(player_pokemon, enemy_pokemon):
 
 
 def print_attacks(player_pokemon, enemy_pokemon):
-    print_pokemon_information(get_pokemon_info(player_pokemon), (get_pokemon_info(enemy_pokemon)))
     # Get the attacks of the player's Pokemon that are available at its current level
     attacks_to_print = [attack for attack in player_pokemon["attacks"] if int(attack["min_level"]) <= int(player_pokemon["level"])]
-
-    print("╔" + ("═" * SCREEN_WIDTH) + "╗")
-    print("║" + ("MOVIMIENTOS").center(SCREEN_WIDTH) + "║")
-    print("║" + (" " * SCREEN_WIDTH) + "║")
-
     # Loop until a valid attack is chosen
     chosen = None
     while not chosen:
+        print_pokemon_information(get_pokemon_info(player_pokemon), (get_pokemon_info(enemy_pokemon)))
+
+        print("╔" + ("═" * SCREEN_WIDTH) + "╗")
+        print("║" + (" " * SCREEN_WIDTH) + "║")
+        print("║" + ("MOVIMIENTOS").center(SCREEN_WIDTH) + "║")
+        print("║" + (" " * SCREEN_WIDTH) + "║")
         for index in range(len(attacks_to_print)): # Print the available attacks
             print("║" + ("{:<2} - {} ".format(index, get_move_info(attacks_to_print[index]))).center(SCREEN_WIDTH) + "║")
         try:
@@ -71,7 +80,7 @@ def print_attacks(player_pokemon, enemy_pokemon):
             return attacks_to_print[int(input(INPUT_MESSAGE))] # Return the chosen attack
         
         except (ValueError, IndexError):
-            print("¡¡¡Opcion invalida!!!")
+            pass
 
 
 def print_actions(player_pokemon, enemy_pokemon):
