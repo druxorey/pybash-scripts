@@ -20,20 +20,20 @@ def attack_information(attacking_pokemon, defending_pokemon, multiplier, attack,
     print("║" + ("{} ataca con: {}".format(colorize(attacking_pokemon["name"], attacking_pokemon_color), attack["name"])).center(SCREEN_WIDTH + 9) + "║")
     if multiplier > 1:
         effectivity = "El ataque fue super efectivo"
-    elif multiplier < 1:
+    elif multiplier <= 1:
         effectivity = "El ataque no ha sido muy efectivo"
 
     print("║" + effectivity.center(SCREEN_WIDTH) + "║")
     print("║" + " ".center(SCREEN_WIDTH) + "║")
 
     damage = (int(attack["damage"]) + attacking_pokemon["attack"] - defending_pokemon["defense"]) * multiplier
-    defending_pokemon["current_health"] = int(defending_pokemon["current_health"]) - damage
+    defending_pokemon["current_health"] = int(defending_pokemon["current_health"]) - int(damage)
 
-    message = ("{} recibe {} puntos de daño (DP)".format(colorize(defending_pokemon["name"], defending_pokemon_color), damage))
+    message = ("{} recibe {} puntos de daño (DP)".format(colorize(defending_pokemon["name"], defending_pokemon_color), int(damage)))
     print("║" + (message).center(SCREEN_WIDTH + 9) + "║")
     print("╚" + ("═" * SCREEN_WIDTH) + "╝")
 
-    time.sleep(4)
+    time.sleep(3)
 
     if int(defending_pokemon["current_health"]) <= 0:
         defending_pokemon["current_health"] = 0
