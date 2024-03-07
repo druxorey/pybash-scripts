@@ -30,14 +30,15 @@ def attack_information(attacking_pokemon, defending_pokemon, multiplier, attack,
     defending_pokemon["current_health"] = int(defending_pokemon["current_health"]) - int(damage)
 
     message = ("{} recibe {} puntos de daño (DP)".format(colorize(defending_pokemon["name"], defending_pokemon_color), int(damage)))
-    print("║" + (message).center(SCREEN_WIDTH + 9) + "║")
+    if int(defending_pokemon["current_health"]) <= 0:
+        defending_pokemon["current_health"] = 0
+        print("║" + ("{} está fuera de combate.".format(colorize(defending_pokemon["name"], defending_pokemon_color))).center(SCREEN_WIDTH + 9) + "║")
+    else:
+        print("║" + (message).center(SCREEN_WIDTH + 9) + "║")
     print("╚" + ("═" * SCREEN_WIDTH) + "╝")
 
     time.sleep(3)
 
-    if int(defending_pokemon["current_health"]) <= 0:
-        defending_pokemon["current_health"] = 0
-        print("{} está fuera de combate.".format(colorize(defending_pokemon["name"], defending_pokemon_color)))
 
 
 def player_attack(player_pokemon, enemy_pokemon):
