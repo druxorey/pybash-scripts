@@ -61,11 +61,21 @@ def get_all_pokemons():
     # If the file is not found, download the data from the internet
     except FileNotFoundError:
         print("¡Archivo no encontrado!, descargando de internet...")
+
         all_pokemons = []
-        for index in range(9):
+        total = 151 # Set the total number of pokemon to the game
+        bar_length = 30 # Set the length of the progress bar
+
+        for index in range(total):
             all_pokemons.append(get_pokemon(index + 1))
-            print("*", end="")
+
+            # Calculate and display the number of '#' characters for the progress bar
+            progress = (index + 1) / total
+            block = int(round(bar_length * progress))
+            text = "\r{0:.0f}% [{1}]".format(progress * 100, '#' * block + '-' * (bar_length - block))
+            sys.stdout.write(text)
             sys.stdout.flush()
+
         # Save the downloaded data to a local file
         with open(pokefile_path, "wb") as pokefile:
             pickle.dump(all_pokemons, pokefile)
