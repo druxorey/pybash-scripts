@@ -8,7 +8,7 @@ from data import get_all_pokemons
 from scripts import SCREEN_WIDTH, INPUT_MESSAGE, colorize, print_inside_box, after_combat_status, get_pokemon_info, print_pokemon_information, print_actions, player_attack, enemy_attack
 
 
-# FUNCIONES PARA INICIALIZAR EL JUEGO
+#! FUNCIONES PARA INICIALIZAR EL JUEGO !#
 
 
 POKEMON_LIST = get_all_pokemons() # Fetch all pokemons
@@ -38,6 +38,14 @@ def any_player_pokemon_lives(player_profile):
     return sum([pokemon["current_health"] for pokemon in player_profile["pokemon_inventory"]]) > 0
 
 
+def cure_all_pokemons(player_profile):
+    for pokemon in player_profile["pokemon_inventory"]:
+        if player_profile["combats"] % 25 == 0: #  Every 25th turn heals all the pokemon 
+            pokemon["current_health"] = pokemon["base_health"]
+        elif player_profile["combats"] % 10 == 0 and pokemon["current_health"] >= 1: # Every 10th turn heals only non defeated pokemon
+            pokemon["current_health"] = pokemon["base_health"]
+
+
 #! --------- FUNCTIONS FOR THE ACTIONS AFTER THE FIGHT --------- !#
 
 
@@ -54,49 +62,47 @@ def item_lottery(player_profile):
 
 
 def assign_experience(attack_history):
-    experience_gained = []
-    total_points = 0  # Inicializa el total de puntos de experiencia ganados
-    for pokemon in attack_history:
+    experience_gained = [] # List to store the experience gained messages
+    total_experience = {} # Dictionary to store the total experience of each Pokémon
 
-        # Asigna de 2 a 8 pts de exp por cada ataque
+    for pokemon in attack_history:
+        total_points = 0
+        display_pokemon = colorize(pokemon["name"], "G")
+
+        # Assigns 8 to 10 exp points for each attack
         points = random.randint(8, 10)
         total_points += points
         pokemon["current_exp"] += points
 
-        # Experiencia necesaria para subir de nivel  = 20 + (nivel de pokemon * 2)
+        # Experience needed to level up = 20 + (Pokémon's level * 2)
         exp_needed = 20 + (pokemon["level"] * 2)
         while pokemon["current_exp"] > exp_needed:
             pokemon["current_exp"] -= exp_needed
             pokemon["level"] += 1
-            experience_gained.append("¡{} subió al nivel {}!".format(colorize(pokemon["name"], "G"), 
-                                                                     pokemon["level"]))
+            experience_gained.append("¡{} subió al nivel {}!".format(display_pokemon, pokemon["level"]))
 
-            # Aumenta el ataque, prob 80%, aumento de 1-2 pts
-            if random.randint(1, 100) > 20:
+            if random.randint(1, 100) > 20: # Increase the attack, 80% probability, increase of 1-2 points
                 attack_increase = random.randint(1, 2)
                 pokemon["attack"] += attack_increase
-                experience_gained.append("Ataque de {} aumentado en {} Pts, total: {}".format(colorize(pokemon["name"], "G"), 
-                                                                                              attack_increase, pokemon["attack"]))
+                experience_gained.append("Ataque de {} aumentado en {} Pts, total: {}".format(display_pokemon, attack_increase, pokemon["attack"]))
 
-            # Aumenta la defensa, prob 80%, aumento de 1-2 pts
-            if random.randint(1, 100) > 20:
+            if random.randint(1, 100) > 20: # Increase the defense, 80% probability, increase of 1-2 points
                 defense_increase = random.randint(1, 2)
                 pokemon["defense"] += defense_increase
-                experience_gained.append("Defensa de {} aumentada en {} Pts, total: {}".format(colorize(pokemon["name"], "G"), 
-                                                                                               defense_increase, pokemon["defense"]))
-
-            # Aumenta la vida, prob 80%, aumento de 3-6 pts
-            if random.randint(1, 100) > 20:
+                experience_gained.append("Defensa de {} aumentada en {} Pts, total: {}".format(display_pokemon, defense_increase, pokemon["defense"]))
+            
+            if random.randint(1, 100) > 20: # Increase the health, 80% probability, increase of 3-6 points
                 health_increase = random.randint(3, 6)
                 pokemon["base_health"] += health_increase
-                experience_gained.append("Vida de {} aumentada en {} Pts, total: {}".format(colorize(pokemon["name"], "G"), 
-                                                                                            health_increase, pokemon["base_health"]))
-
-            # Sube la vida al máximo
+                experience_gained.append("Vida de {} aumentada en {} Pts, total: {}".format(display_pokemon, health_increase, pokemon["base_health"]))
+            
             pokemon["current_health"] = pokemon["base_health"]
 
-    # Agrega el mensaje de experiencia ganada al final del ciclo para cada Pokémon
-    experience_gained.insert(0, "{} ha ganado {} pts de exp".format(colorize(pokemon["name"], "G"), total_points))
+        total_experience[pokemon["name"]] = total_points
+
+    # Add the experience gained message at the end of the loop for each Pokémon
+    for pokemon_name, total_points in total_experience.items():
+        experience_gained.insert(0, "{} ha ganado {} pts de exp".format(colorize(pokemon_name, "G"), total_points))
 
     return experience_gained
 
@@ -133,7 +139,6 @@ def fight(player_profile, enemy_pokemon):
         # If the player's Pokemon's health reaches 0 and there are other Pokemons left, the player chooses another Pokemon
         if player_pokemon["current_health"] == 0 and any_player_pokemon_lives(player_profile):
             player_pokemon = choose_pokemon(player_profile, enemy_pokemon)
-
     
     if enemy_pokemon["current_health"] == 0:
         experience_gained = assign_experience(attack_history)
@@ -155,7 +160,7 @@ def choose_pokemon(player_profile, enemy_pokemon):
             print("║" + (colorize(f"ERROR: {error_message}", "R", True)) + "║")
         else:    
             print("║" + "ELIGE TU POKÉMON".center(SCREEN_WIDTH) + "║")
-        print("║" + (" " * SCREEN_WIDTH) + "║")
+            print("║" + (" " * SCREEN_WIDTH) + "║")
         for index in range(len(player_profile["pokemon_inventory"])):
             print("║" + ("{} - {}".format(index, get_pokemon_info(player_profile["pokemon_inventory"][index]))).center(SCREEN_WIDTH) + "║")
         try:
@@ -218,13 +223,14 @@ def capture_with_pokeball(player_profile, enemy_pokemon):
 
 
 #! --------- MAIN FUNCTION --------- !#
-        
+
 
 def main():
     player_profile = get_player_profile(POKEMON_LIST)
     min_lvl_fix()
     while any_player_pokemon_lives(player_profile):
         enemy_pokemon = random.choice(POKEMON_LIST)
+        cure_all_pokemons(player_profile)
         fight(player_profile, enemy_pokemon)
     os.system("clear")
     print_inside_box("Has perdido el combate Nro.{}".format(player_profile["combats"]))

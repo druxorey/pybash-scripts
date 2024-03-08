@@ -8,7 +8,7 @@ PKBASE = {
     "name": "",
     "current_health": 100,
     "base_health": 100,
-    "level": 1,
+    "level": 5,
     "type": None,
     "current_exp": 0,
     "defense": 10,
