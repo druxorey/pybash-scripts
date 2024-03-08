@@ -15,8 +15,6 @@ def colorize(string, color, center=False):
         return Fore.RED + string + Style.RESET_ALL
     elif color == "G":
         return Fore.GREEN + string + Style.RESET_ALL
-    elif color == "B":
-        return Fore.BLUE + string + Style.RESET_ALL
 
 
 def print_inside_box(string):
@@ -39,7 +37,7 @@ def after_combat_status(experience_gained, item_obtained):
 
     for i in range(3, 0, -1): # Print the countdown for the new battle
         os.system("clear")
-        print_inside_box(f"NUEVO COMBATE EN {i}")
+        print_inside_box("NUEVO COMBATE EN {}".format(i))
         print_inside_box(item_obtained)
         time.sleep(1)
 

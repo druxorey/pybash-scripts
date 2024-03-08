@@ -8,17 +8,17 @@ from data import get_all_pokemons
 from scripts import SCREEN_WIDTH, INPUT_MESSAGE, colorize, print_inside_box, after_combat_status, get_pokemon_info, print_pokemon_information, print_actions, player_attack, enemy_attack
 
 
-#! FUNCIONES PARA INICIALIZAR EL JUEGO !#
+#! --------- FUNCTIONS TO INITIALIZE THE GAME --------- !#
 
 
-POKEMON_LIST = get_all_pokemons() # Fetch all pokemons
+POKEMON_LIST = get_all_pokemons()
 
 
 def min_lvl_fix():
+    # Set the minimum level to 1 if it's not specified
     for pokemon in POKEMON_LIST:
         for attack in pokemon["attacks"]:
             if attack["min_level"] == "":
-                # Set the minimum level to 1 if it's not specified
                 attack["min_level"] = 1
 
 
@@ -129,7 +129,7 @@ def fight(player_profile, enemy_pokemon):
         elif action == "V":
             cure_pokemon(player_profile, player_pokemon, enemy_pokemon)
         elif action == "P":
-            enemy_captured = capture_with_pokeball(player_profile, enemy_pokemon)
+            enemy_captured = capture_with_pokeball(player_profile, player_pokemon, enemy_pokemon)
         elif action == "C":
             player_pokemon = choose_pokemon(player_profile, enemy_pokemon)
 
@@ -182,7 +182,11 @@ def cure_pokemon(player_profile, player_pokemon, enemy_pokemon):
     print_pokemon_information(get_pokemon_info(player_pokemon), (get_pokemon_info(enemy_pokemon)))
 
     if player_profile["health_potion"] > 0:
+
+        # Calculate the points to be recovered, which is the minimum of 50 and the difference between the Pokemon's base health and current health
         recovered_points = min(50, player_pokemon["base_health"] - player_pokemon["current_health"])
+
+        # Increase the Pokemon's current health by 50, but not exceeding its base health and decrement the number of health potions
         player_pokemon["current_health"] = min(player_pokemon["base_health"], player_pokemon["current_health"] + 50)
         player_profile["health_potion"] -= 1
 
@@ -191,34 +195,41 @@ def cure_pokemon(player_profile, player_pokemon, enemy_pokemon):
         print("║" + "Utilizaste una poción".center(SCREEN_WIDTH) + "║")
         print("║" + ("{} Pts recuperados.".format(recovered_points)).center(SCREEN_WIDTH) + "║")
         print("╚" + ("═" * SCREEN_WIDTH) + "╝")
+
     else:
+        # If the player has no potions left, print a message indicating this
         print_inside_box("No tienes más pociones.")
     time.sleep(3)
 
 
-def capture_with_pokeball(player_profile, enemy_pokemon):
-    def wait(message, wait_time):
-            print(message)
-            time.sleep(wait_time)
+def capture_with_pokeball(player_profile, player_pokemon, enemy_pokemon):
 
+    # Nested function to display a message when a Pokemon is captured or escapes
+    def is_captured(message, size):
+        print("╔" + ("═" * SCREEN_WIDTH) + "╗")
+        print("║" + (message).center(size) + "║")
+        print("║" + ("Te quedan {} pokeballs".format(player_profile["pokeballs"])).center(SCREEN_WIDTH) + "║")
+        print("╚" + ("═" * SCREEN_WIDTH) + "╝")
+        time.sleep(3)
+
+    # Calculate the probability of capturing the Pokemon based on its current health
     probability = ((enemy_pokemon["current_health"] / enemy_pokemon["base_health"]) * 100)
-    print("Lanzaste una pokeball")
     player_profile["pokeballs"] -= 1
-    wait("Tick...", 1)
-    wait("Tick...", 1)
+
+    # Simulate the capture process with three "ticks"
+    for i in range(3):
+        print_pokemon_information(get_pokemon_info(player_pokemon), (get_pokemon_info(enemy_pokemon)))
+        print_inside_box("Tick {}".format("." * (i + 1)))
+        time.sleep(1)
+
+    print_pokemon_information(get_pokemon_info(player_pokemon), (get_pokemon_info(enemy_pokemon)))
+    # Depending on the value of 'probability' it is captured or escaped.
     if random.randint(1, 100) > probability:
-        wait("Tick...", 1)
-        wait("puff...", 1)
         player_profile["pokemon_inventory"].append(enemy_pokemon)
-        wait("¡{} ha sido atrapado!".format(colorize(enemy_pokemon["name"], "R")), 1)
-        wait("Te quedan {} pokeballs".format(player_profile["pokeballs"]), 2)
-        # presiona enter 
+        is_captured("¡{} ha sido atrapado!".format(colorize(enemy_pokemon["name"], "R")), (SCREEN_WIDTH + 9))
         return True
     else:
-        wait("Tick...", 1)
-        print("¡Oh no!\n")
-        wait("¡El pokemon ha escapado de la pokebola!", 1)
-        wait("Te quedan {} pokeballs".format(player_profile["pokeballs"]), 2)
+        is_captured("¡Oh no! ¡El pokemon ha escapado de la pokebola!", SCREEN_WIDTH)
         return False
 
 
