@@ -1,8 +1,9 @@
 import readchar
 import os
 import random
-from visuals import *
 from colorama import Fore, Style
+
+from data import WALL, SPACE, print_tutorial_screen, print_game_over_screen, get_obstacle_definition, get_map_size 
 
 # Constants for position indexes
 POS_X = 0
@@ -46,24 +47,14 @@ level = 0
 score = 0
  
 # Create obstacle map
-aleatory_map = random.randint(1,2)
 
-if aleatory_map == 1:
-    obstacle_definition = first_map
-
-elif aleatory_map == 2:
-    obstacle_definition = second_map
-
-obstacle_definition = [list(row) for row in obstacle_definition.split("\n")]
-
-# Constants for map dimensions
-MAP_WIDTH = len(obstacle_definition[0])
-MAP_HEIGHT = len(obstacle_definition)
+obstacle_definition = get_obstacle_definition()
+MAP_SIZE = get_map_size(obstacle_definition)
+MAP_WIDTH = MAP_SIZE[0]
+MAP_HEIGHT = MAP_SIZE[1]
 
 # Game start tutorial
-os.system("clear")
-print(tutorial_screen)
-input("")
+print_tutorial_screen(MAP_SIZE)
 
 # Main game loop
 while True:
