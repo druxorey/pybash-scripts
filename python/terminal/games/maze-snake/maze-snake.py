@@ -1,20 +1,14 @@
 import readchar
 import os
 import random
-from colorama import Fore, Style
 
-from data import WALL, SPACE, print_tutorial_screen, print_game_over_screen, get_obstacle_definition, get_map_size 
+from assets.level_layout import WALL, SPACE, get_obstacle_definition, get_map_size
+from assets.interface import print_tutorial_screen, print_game_over_screen
+from config import COLOR_WALL, COLOR_APPLE, COLOR_CHARACTER, COLOR_POTION, COLOR_RESET 
 
 # Constants for position indexes
 POS_X = 0
 POS_Y = 1
-
-# Color variables
-COLOR_CHARACTER = (Fore.YELLOW)
-COLOR_APPLE = (Fore.RED)
-COLOR_POTION = (Fore.GREEN)
-COLOR_WALL = (Fore.BLUE)
-COLOR_RESET = (Style.RESET_ALL)
 
 # Debug mode initial value
 debug_mode = False
