@@ -4,22 +4,13 @@ import random
 
 from assets.level_layout import WALL, SPACE, get_obstacle_definition, get_map_size
 from assets.interface import print_tutorial_screen, print_game_over_screen
-from config import COLOR_WALL, COLOR_APPLE, COLOR_CHARACTER, COLOR_POTION, COLOR_RESET 
+from config import COLOR_WALL, COLOR_APPLE, COLOR_CHARACTER, COLOR_POTION, COLOR_RESET, MOVEMENT 
 
 # Constants for position indexes
 POS_X = 0
 POS_Y = 1
 
-# Debug mode initial value
 debug_mode = False
-
-# Constants for movement directions
-UP = "w"
-DOWN = "s"
-LEFT = "a"
-RIGHT = "d"
-QUIT = "q"
-DEBUG = "b"
 
 # Initial character values
 character_position = [12,12]
@@ -41,20 +32,13 @@ level = 0
 score = 0
  
 # Create obstacle map
-
 obstacle_definition = get_obstacle_definition()
 MAP_SIZE = get_map_size(obstacle_definition)
 MAP_WIDTH = MAP_SIZE[0]
 MAP_HEIGHT = MAP_SIZE[1]
 
-# Game start tutorial
-print_tutorial_screen(MAP_SIZE)
-
 # Main game loop
 while True:
-
-    os.system("clear")
-
     # generate random apples in the map
     if len(map_apples) <= 0:
         apple_quantity += 1
@@ -150,30 +134,30 @@ while True:
 
     # Calculate the next position based on the input direction
     next_position = character_position.copy()
-    if direction == UP:
+    if direction == MOVEMENT[0]:
         next_position[POS_Y] -= 1
         if next_position[POS_Y] < 0:
             next_position[POS_Y] = (MAP_HEIGHT - 1)
 
-    elif direction == DOWN:
-        next_position[POS_Y] += 1
-        if next_position[POS_Y] > (MAP_HEIGHT - 1):
-            next_position[POS_Y] = (0)
-
-    elif direction == LEFT:
+    elif direction == MOVEMENT[1]:
         next_position[POS_X] -= 1
         if next_position[POS_X] < 0:
             next_position[POS_X] = (MAP_WIDTH - 1)
 
-    elif direction == RIGHT:
+    elif direction == MOVEMENT[2]:
+        next_position[POS_Y] += 1
+        if next_position[POS_Y] > (MAP_HEIGHT - 1):
+            next_position[POS_Y] = (0)
+
+    elif direction == MOVEMENT[3]:
         next_position[POS_X] += 1
         if next_position[POS_X] > (MAP_WIDTH - 1):
             next_position[POS_X] = (0)
 
-    elif direction == QUIT:
+    elif direction == MOVEMENT[4]:
         exit()
 
-    elif direction == DEBUG:
+    elif direction == MOVEMENT[5]:
         debug_mode = not debug_mode
         continue
 
@@ -195,3 +179,12 @@ while True:
     # Update the tail position
     tail.insert(0,character_position.copy())
     tail = tail[:tail_length]
+
+
+def main():
+    print_tutorial_screen(MAP_SIZE)
+    while True:
+        os.system("clear")
+
+if __name__ == "__main__":
+    main()
