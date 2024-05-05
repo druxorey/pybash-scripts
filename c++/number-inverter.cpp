@@ -6,7 +6,7 @@ int main(){
 
     int num, result = 0;
 
-    cout << "Ingresa un número de 4 cifras: "; 
+    cout << "Enter a 4 digit number: "; 
     cin >> num;
 
     int one,two,three,four;
@@ -18,7 +18,7 @@ int main(){
 
     result = (four * 1000)+(three * 100)+(two * 10)+ one;        
 
-    cout << "El resultado de invertir el número es: " << result << endl;
+    cout << "The result of inverting the number is: " << result << endl;
 
     return 0;
 }

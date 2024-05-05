@@ -7,20 +7,20 @@ int main(){
 
     float quadraticTerm, linearTerm, constantTerm, discriminantValue, rootValue, finalPositiveValue, finalNegativeValue;
 
-    cout << endl << "[========= CALCULADORA DE LA RESOLVENTE =========]" << endl << endl;
+    cout << endl << "[====== SECOND DEGREE POLYNOMAL CALCULATOR ======]" << endl << endl;
 
-    cout << "Ingresa el término cuadrático: ";
+    cout << "Enter the quadratic term: ";
     cin >> quadraticTerm; 
-    cout << "Ingresa el término lineal: ";
+    cout << "Enter the linear term: ";
     cin >> linearTerm; 
-    cout << "Ingresa el término constante: ";
+    cout << "Enter the constant term: ";
     cin >> constantTerm; 
     cout << endl;
 
     discriminantValue = (pow(linearTerm, 2)) - (4 * quadraticTerm * constantTerm);
     
     if (discriminantValue < 0){
-        cout << "El polinomio dado no tiene una solución real" << endl;
+        cout << "The given polynomial has no real solution" << endl;
         return 0;
     } else {
         rootValue = sqrt(discriminantValue);
@@ -29,14 +29,14 @@ int main(){
         finalNegativeValue = ((-1 * linearTerm) - rootValue) / (2 * quadraticTerm);
         
         if (finalPositiveValue < 1 and finalPositiveValue > -1){
-            cout << "El valor positivo del polinomio es: " << 0 << endl;
+            cout << "The positive value of the polynomial is: " << 0 << endl;
         } else {
-            cout << "El valor positivo del polinomio es: " << finalPositiveValue << endl;
+            cout << "The positive value of the polynomial is: " << finalPositiveValue << endl;
 
         }
 
         if (rootValue != 0){
-            cout << "El valor negativo del polinomio es: " << finalNegativeValue << endl;
+            cout << "The negative value of the polynomial is: " << finalNegativeValue << endl;
         }
     }
 
