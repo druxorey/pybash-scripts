@@ -13,7 +13,7 @@ int main(){
     cout << "Enter the distance Pedro can jump: ";
     cin >> secondDistance;
 
-    cout << "Enter the times Pedro will jump: ";
+    cout << "Enter the times Jose will jump: ";
     cin >> secondTimes;
     cout << endl;
 
