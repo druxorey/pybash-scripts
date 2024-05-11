@@ -5,9 +5,11 @@ Welcome to the 'pybash-scripts' repository. This is a dedicated space where we h
 ## Repository Structure
 
 - `bash/`: Contains Bash scripts. 
+- `c++/`: Contains C++ scripts. 
 - `python/`: Contains Python scripts. 
   - `graphic/`: Contains applications with a graphical interface. 
   - `terminal/`: Contains applications that run in a terminal.
+- `rust/`: Contains Rust scripts. 
 
 The `learning` folder contains scripts for understanding the language.
 
@@ -22,6 +24,16 @@ To execute a Bash script, navigate to the directory containing the script and us
 or
 
     sh script-name.sh
+
+### C++ Scripts
+
+To execute a C++ script, navigate to the directory containing the script and comile it with the 'g++' package using the following command:
+
+    g++ script-name.cpp -o script-compiled
+
+Then run it with the next command:
+
+    ./script-name
 
 ### Python Scripts
 
@@ -52,6 +64,16 @@ Now you can run your script:
     python3 script-name.py
 
 **WARNING:** Some programs may not work correctly on Windows as they execute Unix commands. They may need to be modified for correct execution.
+
+### Rust Scripts
+
+To execute a Rust script, navigate to the directory containing the script and comile it with the 'rust' package using the following command:
+
+    rustc script-name.rs -o script-compiled
+
+Then run it with the next command:
+
+    ./script-name
 
 ## License
 
