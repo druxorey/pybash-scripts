@@ -26,6 +26,8 @@ help() {
     echo "  -m      Shows the final size value en Megabytes."
     echo "  -g      Shows the final size value en Gigabytes."
     echo
+    echo "Report bugs to https://github.com/druxorey/pybash-scripts/issues"
+    echo
     exit 1
 }
 
@@ -96,5 +98,5 @@ else
 fi
 
 echo 
-echo -e " ► $FILES$totalFiles files$END occupy a total of $SIZE$finalSize $finalMemoryUnit"
+echo -e " ► $FILES$totalFiles files$END occupy a total of $SIZE$finalSize $finalMemoryUnit$END"
 echo 
