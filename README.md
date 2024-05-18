@@ -7,8 +7,6 @@ Welcome to the 'pybash-scripts' repository. This is a dedicated space where we h
 - `bash/`: Contains Bash scripts. 
 - `c++/`: Contains C++ scripts. 
 - `python/`: Contains Python scripts. 
-  - `graphic/`: Contains applications with a graphical interface. 
-  - `terminal/`: Contains applications that run in a terminal.
 - `rust/`: Contains Rust scripts. 
 
 The `learning` folder contains scripts for understanding the language.
