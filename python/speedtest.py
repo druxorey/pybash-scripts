@@ -1,13 +1,19 @@
 import time
 
-start = time.time()
 
-count = 0
-number = 50_000_000
+def main():
+    start = time.time() * 1000
 
-for i in range (number):
-    count += 1
+    count = 0
+    number = 50_000_000
 
-duration = time.time() - start
+    for i in range (number):
+        count += 1
 
-print(f"Counting to {number} in Python took {duration} seconds")
+    duration = int(round(time.time() * 1000 - start))
+
+    print(f"Counting to {number} in Python took {duration} ms.")
+
+
+if __name__ == "__main__":
+    main()

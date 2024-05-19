@@ -12,5 +12,5 @@ fn main() {
 
     let duration = start.elapsed();
 
-    println!("Counting to {} in Rust took {:?} seconds", number, duration.as_secs_f64());
+    println!("Counting to {} in Rust took {:?} ms.", number, duration.as_millis());
 }
