@@ -6,6 +6,7 @@ Welcome to the 'pybash-scripts' repository. This is a dedicated space where we h
 
 - `bash/`: Contains Bash scripts. 
 - `c++/`: Contains C++ scripts. 
+- `golang/`: Contains Go scripts. 
 - `python/`: Contains Python scripts. 
 - `rust/`: Contains Rust scripts. 
 
@@ -28,6 +29,16 @@ or
 To execute a C++ script, navigate to the directory containing the script and comile it with the 'g++' package using the following command:
 
     g++ script-name.cpp -o script-compiled
+
+Then run it with the next command:
+
+    ./script-name
+
+### Go Scripts
+
+To execute a Go script, navigate to the directory containing the script and comile it with the 'go' package using the following command:
+
+    go build -o script-compiled script-name.cpp 
 
 Then run it with the next command:
 
