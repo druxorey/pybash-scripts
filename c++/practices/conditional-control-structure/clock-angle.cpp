@@ -10,7 +10,6 @@ int main(){
 
     cout << "Enter the clock hour hand: ";
     cin >> hourHand;
-
     cout << "Enter the clock minute hand: ";
     cin >> minuteHand;
 

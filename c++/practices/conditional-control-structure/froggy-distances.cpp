@@ -5,12 +5,12 @@ using namespace std;
 int main(){
     int joseDistance, pedroDistance, joseJumps;
 
+    cout << endl << "[========= FROGGY DISTANCES =========]" << endl << endl;
+
     cout << "Enter the distance Jose can jump: ";
     cin >> joseDistance;
-
     cout << "Enter the times Jose will jump: ";
     cin >> joseJumps;
-
     cout << "Enter the distance Pedro can jump: ";
     cin >> pedroDistance;
     cout << endl;

@@ -3,7 +3,7 @@
 using namespace std;
 
 int main(){
-    float m1, b1, m2, b2, x_intersection, y_intersection;
+    float m1, b1, m2, b2, xIntersection, yIntersection;
 
     cout << endl << "[========= INTERSECTION OF NON-PARALLEL LINES =========]" << endl << endl;
 
@@ -17,10 +17,10 @@ int main(){
     cout << "Introduce the indepentent term for the second line: ";
     cin >> b2;
 
-    x_intersection = (b2-b1)/(m1-m2);
-    y_intersection = m1*(b2-b1)/(m1-m2)+b1;
+    xIntersection = (b2-b1)/(m1-m2);
+    yIntersection = m1*(b2-b1)/(m1-m2)+b1;
 
-    cout << "The intersection is: (" << x_intersection << "," << y_intersection << ")" << endl;
+    cout << "The intersection is: (" << xIntersection << "," << yIntersection << ")" << endl;
 
     return 0;
 }

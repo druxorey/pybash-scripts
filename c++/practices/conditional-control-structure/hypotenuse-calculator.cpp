@@ -10,7 +10,6 @@ int main(){
 
     cout << "Enter the triangle first cathetus value: ";
     cin >> firstCathetus;
-
     cout << "Enter the triangle second cathetus value: ";
     cin >> secondCathetus;
 

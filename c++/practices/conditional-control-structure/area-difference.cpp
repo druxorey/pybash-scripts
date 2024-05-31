@@ -9,10 +9,8 @@ int main(){
 
     cout << "Enter the triangle base value: ";
     cin >> baseValue;
-
     cout << "Enter the triangle height value: ";
     cin >> heightValue;
-
     cout << "Enter the circle raius value: ";
     cin >> radiusValue;
 

@@ -3,9 +3,9 @@
 using namespace std;
 
 int main() {
-
 	int firstNumber, secondNumber, thirdNumber;
 	int firstX, firstY, secondX, secondY, thirdX, thirdY;
+	int xFinal, yFinal;
 
 	cout << "Enter the first number: ";
 	cin >> firstNumber;
@@ -22,8 +22,6 @@ int main() {
 
 	thirdX = thirdNumber / 100;
 	thirdY = thirdNumber % 100;
-
-	int xFinal, yFinal;
 
 	xFinal = (firstX + secondX + thirdX) / 3;
 	yFinal = (firstY + secondY + thirdY) / 3;
