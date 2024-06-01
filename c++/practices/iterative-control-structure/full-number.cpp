@@ -3,10 +3,10 @@
 using namespace std;
 
 int main() {
-    
     bool isEnded = true;
     int inputNumber, fullNumber = 0;
 
+    cout << endl << "[========= FULL NUMBER =========]" << endl << endl;
     do {
         cout << "Enter the number: ";
         cin >> inputNumber;

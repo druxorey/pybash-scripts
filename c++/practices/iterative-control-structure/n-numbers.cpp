@@ -3,18 +3,17 @@
 using namespace std;
 
 int main(){
-    int inputNumber;
+    int inputNumber, i;
+
+    cout << endl << "[========= DIGITS IN A NUMBER =========]" << endl << endl;
+
     cout << "Enter the number: ";
     cin >> inputNumber;
 
-    int contadorNumber = 0;
-    int i = 0;
-
     for (i = 0; inputNumber > 0; i++) {
         inputNumber /= 10;
-        contadorNumber++;
     }
+    cout << "The number has " << i << " digits." << endl;
 
-    cout << "The number has " << contadorNumber << " digits." << endl;
     return 0;
 }

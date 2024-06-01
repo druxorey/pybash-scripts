@@ -6,6 +6,8 @@ int main(){
 
     int binary, correctedBinary = 0, iteration = 1, decimal = 0, finalDecimal = 0;
 
+    cout << endl << "[========= INFINITE BINATY TO DECIMAL =========]" << endl << endl;
+
     do {
         cout << "Enter the number: ";
         cin >> binary;

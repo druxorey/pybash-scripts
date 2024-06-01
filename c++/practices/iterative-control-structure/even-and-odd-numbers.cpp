@@ -3,7 +3,6 @@
 using namespace std;
 
 int main(){
-
     int number, iteration = 0, evenNumbers = 0, oddNumbers = 0, totalNumbers = 0;
 
     cout << endl << "[========= EVEN AND ODD NUMBERS =========]" << endl << endl;

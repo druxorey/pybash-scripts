@@ -4,7 +4,8 @@ using namespace std;
 
 int main() {
     int inputNumber;
-    cout << endl << "[========= CAPICUA CALCULATOR =========]" << endl << endl;
+
+    cout << endl << "[========= INFINITE CAPICUA NUMBER =========]" << endl << endl;
 
     cout << "Enter the number: ";
     cin >> inputNumber;
