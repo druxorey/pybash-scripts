@@ -9,7 +9,7 @@ function errorMessage() {
 
 
 function todo() {
-    todoLocation="$documentLocation/todo"
+    todoLocation="$documentLocation/todo.md"
 
     if [ -f "$todoLocation" ]; then
         nvim $todoLocation
@@ -21,9 +21,9 @@ function todo() {
 }
 
 
-function main(){
+function main() {
     file=$1
-    fileList=("todo" "vim-cheatsheets")
+    fileList=("todo" "vim-cheatsheets" "guides-ideas")
 
     for i in "${fileList[@]}"; do
         if [ "$i" == "$file" ]; then
@@ -31,7 +31,7 @@ function main(){
                 todo             
                 exit 0
             else
-                nvim $documentLocation$file
+                nvim $documentLocation$file.md
                 exit 0
             fi
         fi
@@ -39,4 +39,4 @@ function main(){
     errorMessage
 }
 
-main "$@"
+main $@
