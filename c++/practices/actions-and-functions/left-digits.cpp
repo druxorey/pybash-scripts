@@ -31,11 +31,13 @@ int extractDigits(int fullNumber, int stop) {
 int main(){
     int fullNumber, stop;
 
-    cout << "Ingresa los dígitos: ";
+    cout << endl << "[========= LEFT DIGITS =========]" << endl << endl;
+
+    cout << "Enter the number: ";
     cin >> fullNumber;
-    cout << "Ingresa el punto de parada: ";
+    cout << "Enter the final number: ";
     cin >> stop;
 
-    cout << "El cálculo final es: " << extractDigits(invertNumber(fullNumber), stop) << endl;
+    cout << "The final calculation is: " << extractDigits(invertNumber(fullNumber), stop) << endl;
     return 0;
 }
