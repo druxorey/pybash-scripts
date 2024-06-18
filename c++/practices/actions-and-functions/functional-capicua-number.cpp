@@ -5,7 +5,7 @@ using namespace std;
 bool isCapicua(int number) {
     int capicua = 0, comparator = number;
     do {
-        capicua = capicua*10 + number%10;
+        capicua = capicua * 10 + number % 10;
         number /= 10;
     } while (number - 1 != -1);
     return capicua == comparator;
