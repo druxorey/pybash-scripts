@@ -1,6 +1,6 @@
-## PyBash Scripts
+# PyBash Scripts
 
-Welcome to the 'pybash-scripts' repository. This is a dedicated space where we house a collection of scripts written in Bash and Python. These scripts serve a dual purpose - they are designed to automate various tasks, making your life easier, and they also serve as learning resources for those interested in getting to grips with Bash and Python scripting.
+This is a dedicated space where we house a collection of scripts written in Bash and Python, plus other languages. These scripts serve a dual purpose, they are designed to automate various tasks, making your life easier, and they also serve as learning resources for those interested in getting to grips with Bash and Python scripting.
 
 ## Repository Structure
 
@@ -10,7 +10,7 @@ Welcome to the 'pybash-scripts' repository. This is a dedicated space where we h
 - `python/`: Contains Python scripts. 
 - `rust/`: Contains Rust scripts. 
 
-The `learning` folder contains scripts for understanding the language.
+*- **Note**: The `practices` directories contains scripts for understanding the language.*
 
 ## How to Execute Scripts
 
