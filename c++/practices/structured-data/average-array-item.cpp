@@ -1,5 +1,5 @@
 #include <iostream>
-#include "rand-array.cpp"
+#include "array-functions.cpp"
 
 using namespace std;
 
@@ -11,20 +11,21 @@ void averageInArray(int array[], int size, int number, int &quantity) {
 
 
 int main() {
-    int arraySize, averageNumber, quantity = 0;
+    int sizeArray, averageNumber, quantityNumber = 0;
     
     printf("\n[========= AVERAGE ARRAY ITEM =========]\n\n");
 
     printf("Enter the size of the array: ");
-    cin >> arraySize;
+    cin >> sizeArray;
     printf("Enter the averge number: ");
     cin >> averageNumber;
 
-    int array[arraySize];
+    int array[sizeArray];
 
-    randArray(array, arraySize);
-    averageInArray(array, arraySize, averageNumber, quantity);
+    randArray(array, sizeArray);
+    averageInArray(array, sizeArray, averageNumber, quantityNumber);
 
-    printf("\nFinal quantity: %i\n", quantity);
+    printf("\nFinal quantity: %i\n", quantityNumber);
+
     return 0;
 }

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cmath>
-#include "rand-array.cpp"
+#include "array-functions.cpp"
 
 using namespace std;
 
@@ -15,24 +15,20 @@ void replaceInArray(int array[], int size, int number) {
 
 
 int main(){
-    int arraySize, replacedNumber;
+    int sizeArray, replacedNumber;
     
     printf("\n[========= REPLACING POWERS OF TWO =========]\n\n");
 
     printf("Enter the size of the array: ");
-    cin >> arraySize;
+    cin >> sizeArray;
     printf("Enter the number: ");
     cin >> replacedNumber;
 
-    int array[arraySize];
+    int array[sizeArray];
 
-    randArray(array, arraySize);
-    replaceInArray(array, arraySize, replacedNumber);
-    cout << endl;
-
-    for (int i = 0; i < arraySize; i++) {
-        printf("%i ", array[i]);
-    }
+    randArray(array, sizeArray);
+    replaceInArray(array, sizeArray, replacedNumber);
+    printArray(array, sizeArray);
 
     return 0;
 }

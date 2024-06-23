@@ -1,5 +1,5 @@
 #include <iostream>
-#include "rand-array.cpp"
+#include "array-functions.cpp"
 
 using namespace std;
 
@@ -16,17 +16,17 @@ int maxArray(int array[], int size) {
     return maxNumber;
 };
 
-int main(){
-    int arraySize;
-    int initialArray[arraySize];
+int main() {
+    int sizeArray;
+    int initialArray[sizeArray];
 
     printf("\n[========= MAX ARRAY ITEM =========]\n\n");
 
     printf("Enter the size of the array: ");
-    cin >> arraySize;
+    cin >> sizeArray;
 
-    randArray(initialArray, arraySize);
-    printf("The max number in the array is %i.\n", maxArray(initialArray, arraySize));
+    randArray(initialArray, sizeArray);
+    printf("The max number in the array is %i.\n", maxArray(initialArray, sizeArray));
 
     return 0;
 }

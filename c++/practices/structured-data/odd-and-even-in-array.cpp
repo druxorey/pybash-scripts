@@ -1,5 +1,5 @@
 #include <iostream>
-#include "rand-array.cpp"
+#include "array-functions.cpp"
 
 using namespace std;
 
@@ -12,18 +12,18 @@ void oddAndEven(int numberList[], int size, int &even, int &odd) {
 }
 
 int main(){
-    int size, even, odd;
+    int sizeArray, evenQuantity, oddQuantity;
 
     printf("\n[========= ODD AND EVEN IN ARRAY =========]\n\n");
 
     printf("Enter the size of the array: ");
-    cin >> size;
+    cin >> sizeArray;
 
-    int numberList[size];
-    randArray(numberList, size);
-    oddAndEven(numberList, size, even, odd);
+    int numberList[sizeArray];
+    randArray(numberList, sizeArray);
+    oddAndEven(numberList, sizeArray, evenQuantity, oddQuantity);
 
-    printf("In the array are %i odd numbers and %i even numbers.\n", odd, even);
+    printf("In the array are %i odd numbers and %i even numbers.\n", oddQuantity, evenQuantity);
 
     return 0;
 }

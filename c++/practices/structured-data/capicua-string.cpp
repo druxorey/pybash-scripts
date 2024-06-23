@@ -2,10 +2,10 @@
 
 using namespace std;
 
-bool isCapicua(string example) { 
-    int lenght = example.length(); 
+bool isCapicua(string text) { 
+    int lenght = text.length(); 
     for (int i = 0 ; i <= lenght/2 ; i++) {
-        if (example[lenght-1-i] != example[i]) {
+        if (text[lenght-1-i] != text[i]) {
             return false;
         }
     }
@@ -13,15 +13,15 @@ bool isCapicua(string example) {
 }
 
 
-int main(){
-    string example;
+int main() {
+    string textNormal;
 
     printf("\n[========= CAPICUA STRING =========]\n\n");
 
     printf("Enter the string: ");
-    cin >> example;
+    cin >> textNormal;
 
-    if (isCapicua(example)) {
+    if (isCapicua(textNormal)) {
         printf("The string is capicua.\n");
     } else {
         printf("The string is not capicua.\n");

@@ -1,4 +1,5 @@
 #include <iostream>
+#include "array-functions.cpp"
 
 using namespace std;
 
@@ -14,31 +15,23 @@ void moveInArray(int array[], int size, int move) {
 } 
 
 
-int main(){
-    int arraySize, averageNumber;
+int main() {
+    int sizeArray, averageNumber;
 
     printf("\n[========= MOVE IN ARRAY =========]\n\n");
     
     printf("Enter the size of the array: ");
-    cin >> arraySize;
+    cin >> sizeArray;
     printf("Enter the averge number: ");
     cin >> averageNumber;
-    cout << endl;
 
-    int array[arraySize];
+    int array[sizeArray];
 
-    for (int i = 0; i < arraySize; i++) {
-        array[i] = i;
-        printf("%i ", array[i]);
-    }
+    fillArray(array, sizeArray);
+    printArray(array, sizeArray);
 
-    cout << endl;
-    moveInArray(array, arraySize, averageNumber);
+    moveInArray(array, sizeArray, averageNumber);
+    printArray(array, sizeArray);
 
-    for (int i = 0; i < arraySize; i++) {
-        printf("%i ", array[i]);
-    }
-
-    cout << endl;
     return 0;
 }
