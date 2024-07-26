@@ -10,8 +10,6 @@ This is a dedicated space where we house a collection of scripts written in Bash
 - `python/`: Contains Python scripts. 
 - `rust/`: Contains Rust scripts. 
 
-*- **Note**: The `practices` directories contains scripts for understanding the language.*
-
 ## How to Execute Scripts
 
 ### Bash Scripts
