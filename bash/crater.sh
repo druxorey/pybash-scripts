@@ -14,10 +14,8 @@ EOF
 cppExample=$(cat << EOF
 #include <iostream>
 
-using namespace std;
-
 int main() {
-    cout << "Hello World" << endl;
+    std::cout << "Hello World" << '\n';
     return 0;
 }
 EOF
@@ -90,9 +88,7 @@ function main() {
         "python") echo "$pythonExample" > $fileName.py  ;;
         "rust") echo "$rustExample" > $fileName.rs      ;;
         "latex") echo "$latexExample" > $fileName.tex   ;;
-        *)
-            help
-            exit 1
+        *) help
         ;;
     esac
 }
