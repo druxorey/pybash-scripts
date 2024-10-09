@@ -1,5 +1,8 @@
 #!/bin/bash
 
+FILES="\e[0;32m"
+END="\e[0m"
+
 function help() {
     echo
     echo "USAGE: touches [FILES NAME] [FILES QUANTITY] [FILES ROUTE]"
@@ -21,29 +24,23 @@ function help() {
 
 function main () {
 
-    if [ $# -ne 3 ]; then
-        help
-    fi
+    [ $# -lt 2 ] && help
+    [ $2 -lt 1 ] && error "Error: el numero de ficheros no puede ser menor que 1"
 
-    if [ ! -d $3 ]; then
-        error "Error: el directorio no existe"
-    fi
+    route=${3:-$(pwd)}
 
-    if [ $2 -lt 1 ]; then
-        error "Error: el numero de ficheros no puede ser menor que 1"
-    fi
-
-    name=$($1 | cut -d'.' -f1)
-    extension=$($1 | cut -d'.' -f2)
+    name=$(echo $1 | rev | cut -d'.' -f2- | rev)
+    extension=$(echo $1 | rev | cut -d'.' -f1 | rev)
 
     for (( i = 1; i <= $2; i++ )); do
-        file="$3/$name-$i.$extension"
-        if [ $i -lt 10 ]; then
-            file="$3/$name-0$i.$extension"
+        if [ $i -gt 9 ]; then
+            file="$name-$i.$extension"
+        else
+            file="$name-0$i.$extension"
         fi
-        echo $file
-        echo "Fichero $file creado" | tr -s /
+        touch "$route/$file"
+        echo -e "Fichero $FILES$file$END creado" | tr -s /
     done
-    }
+}
 
 main $@
