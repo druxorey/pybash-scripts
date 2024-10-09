@@ -61,7 +61,7 @@ EOF
 
 function help() {
     echo
-    echo "USAGE: defaultfi [FILE TYPE] [FILE NAME]"
+    echo "USAGE: crater [FILE TYPE] [FILE NAME]"
     echo
     echo "DESCRIPTION: Creates a default file in a specific programming language."
     echo
@@ -70,8 +70,8 @@ function help() {
     echo "  FILE NAME: (Optional) The name of the file."
     echo
     echo "EXAMPLES:"
-    echo "  defaultfi c++ helloWorld"
-    echo "  defaultfi python"
+    echo "  crater c++ helloWorld"
+    echo "  crater python"
     echo
     echo "Report bugs to https://github.com/druxorey/pybash-scripts/issues"
     echo
