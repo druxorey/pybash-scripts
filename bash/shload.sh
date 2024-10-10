@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Original Script from https://github.com/kndndrj/shload
+
 MAX_WIDTH=96
 BAR_CHARACTER="="
 
