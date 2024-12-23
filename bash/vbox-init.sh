@@ -27,7 +27,7 @@ function main() {
 	echo "Enter the server's password: "
 	read passwordServer
 
-	echo "alias buho='smbclient //$ipServer -U $usernameServer%$passwordServer'" >> .bashrc
+	echo "alias buho='smbclient //$ipServer -U $usernameServer%$passwordServer'" >> ~/.bashrc
 }
 
 main $@
