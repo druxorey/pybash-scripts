@@ -14,6 +14,8 @@ function main() {
 	echo -e "$RUNNING Cloning dotfiles... $END"
 	git clone https://github.com/druxorey/dotfiles.git ~/dotfiles || echo -e "$FAILED Cloning failed$END"
 
+	wget -O /etc/samba/smb.conf "https://raw.githubusercontent.com/samba-team/samba/master/examples/smb.conf.default"
+
 	sudo systemctl enable smb.service
 	sudo systemctl start smb.service
 	sudo systemctl enable nmb.service
