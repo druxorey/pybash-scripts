@@ -14,8 +14,18 @@ EOF
 cppExample=$(cat << EOF
 #include <iostream>
 
-int main() {
-	std::cout << "Hello World" << '\n';
+int main(int argc, char *argv[]) {
+	printf("Hello World\n");
+	return 0;
+}
+EOF
+)
+
+cExample=$(cat << EOF
+#include <stdio.h>
+
+int main(int argc, char *argv[]) {
+	printf("Hello World\n");
 	return 0;
 }
 EOF
@@ -66,7 +76,7 @@ function help() {
 	echo "DESCRIPTION: Creates a default file in a specific programming language."
 	echo
 	echo "ARGUMENTS:"
-	echo "  FILE TYPE: bash, c++, python, rust, latex."
+	echo "  FILE TYPE: bash, c++, c, python, rust, latex."
 	echo "  FILE NAME: (Optional) The name of the file."
 	echo
 	echo "EXAMPLES:"
@@ -85,6 +95,7 @@ function main() {
 	case $fileType in
 		"bash") echo "$bashExample" > $fileName.sh;;
 		"c++") echo "$cppExample" > $fileName.cpp;;
+		"c") echo "$cExample" > $fileName.c;;
 		"python") echo "$pythonExample" > $fileName.py;;
 		"rust") echo "$rustExample" > $fileName.rs;;
 		"latex") echo "$latexExample" > $fileName.tex;;
