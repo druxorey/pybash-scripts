@@ -4,7 +4,7 @@ RUNNING="\e[35m"
 FAILED="\e[1;31m"
 END="\e[0m"
 
-paquetes=("git" "vim" "smbclient" "virtualbox-guest-utils" "xf86-video-vmware" "linux-headers" "linux-lts-headers" "linux-lts")
+paquetes=("git" "vim" "smbclient" "samba" "virtualbox-guest-utils" "xf86-video-vmware" "linux-headers" "linux-lts-headers" "linux-lts")
 
 function main() {
 
@@ -14,7 +14,8 @@ function main() {
 	echo -e "$RUNNING Cloning dotfiles... $END"
 	git clone https://github.com/druxorey/dotfiles.git ~/dotfiles || echo -e "$FAILED Cloning failed$END"
 
-	wget -O /etc/samba/smb.conf "https://raw.githubusercontent.com/samba-team/samba/master/examples/smb.conf.default"
+	sudo mkdir /etc/samba
+	sudo wget -O /etc/samba/smb.conf "https://raw.githubusercontent.com/samba-team/samba/master/examples/smb.conf.default"
 
 	sudo systemctl enable smb.service
 	sudo systemctl start smb.service
@@ -30,6 +31,8 @@ function main() {
 	read passwordServer
 
 	echo "alias buho='smbclient //$ipServer -U $usernameServer%$passwordServer'" >> ~/.bashrc
+
+	source ~/.bashrc
 }
 
 main $@
